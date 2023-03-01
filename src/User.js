@@ -36,6 +36,4 @@ return (
     <Button type="primary">Create Task</Button> 
   </div>  
 ); 
-
-}
 export default App;
