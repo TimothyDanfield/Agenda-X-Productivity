@@ -1,0 +1,6 @@
+Create a Home page that has the Task inside of it.
+Create an About Us section that has our pictures and our mission statement and also a contact us from
+Drill down the components through routes insde of the index.js
+App.js should have the NavBar inside of it so that NavBar should always display on the page so users can navigate
+Vesper - Continue to design the Home.js clickable links to navigate to the seperate sections of the application dummy button for now add when we create js files
+Tim - Create NavBar js file and Css, work, groceries, vacation, social, self-care

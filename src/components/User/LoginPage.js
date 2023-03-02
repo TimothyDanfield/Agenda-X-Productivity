@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
 
-const User = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,10 +32,12 @@ const User = () => {
     setPassword("");
   };
 
+  // Create funtionality for the sign up here
+
   return (
     <div>
-      <Input placeholder="Username" onChange={handleUsernameChange} />
-      <Input placeholder="Password" onChange={handlePasswordChange} />
+      <Input placeholder="Username" style={{width:"200px"}} onChange={handleUsernameChange} />
+      <Input placeholder="Password" style={{width:"200px"}} onChange={handlePasswordChange} />
       <Button type="primary" onClick={loginUser}>
         Login
       </Button>
@@ -43,4 +45,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default LoginPage;

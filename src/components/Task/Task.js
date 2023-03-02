@@ -51,7 +51,7 @@ const Task = () => {
   return (
     <div>
       <Calendar onSelect={handleDateChange} value={date} />
-      <Input placeholder="Task Name" onChange={handleTaskNameChange} />
+      <Input placeholder="Task Name" style={{width:"200px"}} onChange={handleTaskNameChange} />
       <Select placeholder="Category" onChange={handleCategoryChange}>
         <Option value="work">Work</Option>
         <Option value="personal">Personal</Option>
