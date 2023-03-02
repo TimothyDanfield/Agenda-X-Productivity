@@ -48,6 +48,8 @@ const Task = () => {
 
     setReminderTime("");
   };
+
+  // add color code to different categories || add completed or not completed  
   return (
     <div>
       <Calendar onSelect={handleDateChange} value={date} />
