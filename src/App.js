@@ -7,7 +7,7 @@ import LoginPage from './components/User/LoginPage'
 import WelcomePage from './components/Home/WelcomePage'
 import AboutUs from './components/AboutUs/AboutUs'
 import ContactUs from './components/ContactUs/ContactUs'
-
+import SelfCare from './components/SelfCare/SelfCare'
 const App = () => {
 
  
@@ -20,6 +20,7 @@ const App = () => {
       <Route exact path="/welcome" element={<WelcomePage />} />
       <Route exact path="/aboutus" element={<AboutUs />} />
       <Route exact path="/contact" element={<ContactUs />} />
+      <Route exact path="/selfcare" element={<SelfCare />} />
     </Routes>
     </div>
   )
