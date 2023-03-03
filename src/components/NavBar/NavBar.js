@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div className="navbar">
-      <Link to="/task">Work</Link>
+    <div style={{textAlign:"center", backgroundColor:"black"}}>
+      <Link style={{ color: "white", padding:"10px" }} to="/task">Work</Link>
     
-      <Link to="/self-care">Self-Care</Link>
-      <Link to="/aboutus">About Us</Link>
-      <Link to="/contact">Contact Us</Link>
+      <Link style={{ color: "white",padding:"10px" }} to="/self-care">Self-Care</Link>
+      <Link style={{ color: "white",padding:"10px" }} to="/aboutus">About Us</Link>
+      <Link style={{ color: "white",padding:"10px" }} to="/contact">Contact Us</Link>
     </div>
   );
 };

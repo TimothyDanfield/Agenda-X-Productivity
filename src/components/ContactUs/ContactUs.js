@@ -27,24 +27,24 @@ const ContactUs = () => {
         type="text"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
-      />
+      /><br/><br/>
 
       <label>Last Name</label>
       <input
         type="text"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
-      />
+      /><br/><br/>
 
       <label>Email</label>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-      />
+      /><br/><br/>
 
       <label>Message</label>
-      <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
+      <textarea rows="10" cols="50" value={message} onChange={(e) => setMessage(e.target.value)} />
 
       <button type="submit">Send Email</button>
     </form>
