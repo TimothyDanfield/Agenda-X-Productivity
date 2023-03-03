@@ -53,8 +53,8 @@ const Task = () => {
   return (
     <div>
       <Calendar onSelect={handleDateChange} value={date} />
-      <Input placeholder="Task Name" style={{width:"200px"}} onChange={handleTaskNameChange} />
-      <Select placeholder="Category" onChange={handleCategoryChange}>
+      <Input placeholder="Task Name" value={taskName} style={{width:"200px"}} onChange={handleTaskNameChange} />
+      <Select placeholder="Category"  onChange={handleCategoryChange}>
         <Option value="work">Work</Option>
         <Option value="personal">Personal</Option>
         <Option value="other">Other</Option>
@@ -67,7 +67,7 @@ const Task = () => {
       <DatePicker
         showTime
         format="YYYY-MM-DD HH:mm:ss"
-        placeholder="Reminder Time"
+        placeholder="Date"
         onChange={handleReminderTimeChange}
       />
       <Button type="primary" onClick={createTask}>
