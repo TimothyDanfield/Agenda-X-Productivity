@@ -8,6 +8,7 @@ import WelcomePage from './components/Home/WelcomePage'
 import AboutUs from './components/AboutUs/AboutUs'
 import ContactUs from './components/ContactUs/ContactUs'
 import SelfCare from './components/SelfCare/SelfCare'
+import SignUp from './components/SignUp/SignUp'
 const App = () => {
 
  
@@ -16,6 +17,7 @@ const App = () => {
     <NavBar />
     <Routes>
       <Route exact path="/login" element={<LoginPage />} />
+      <Route exact path="/signup" element={<SignUp />} />
       <Route exact path="/task" element={<Task />} />
       <Route exact path="/welcome" element={<WelcomePage />} />
       <Route exact path="/aboutus" element={<AboutUs />} />
