@@ -4,11 +4,6 @@ const express = require('express')
 const router = require('./routes')
 const keys = require('./config/keys')
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials: true,
-    optionSuccessStatus: 200
-}
 
 mongoose.connect(keys.database.url, {
 }).catch((error) => {
@@ -22,13 +17,10 @@ mongoose.connection.on('connected', () => {
 const app = express()
 const PORT = 3001
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.use((req, res, next) => {
-    res.header({"Access-Control-Allow-Origin": "*"})
-  }) 
 // api router
 app.use(keys.app.apiEndpoint, router)
 

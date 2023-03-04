@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
+import axios from '../../utils/axiosConfig'
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -15,16 +16,28 @@ const LoginPage = () => {
 
   // Login Functionality:
 
-  const loginUser = () => {
+  const loginUser = async () => {
     if (!username || !password) return;
 
     let userObj = { username: username, password: password };
 
-    console.log("User Logged In", userObj);
+    try {
+      const newUser = await axios.get(`/api/user?username=${username}`)
+      if (newUser.data.username === username && newUser.data.password === password) {
+        console.log("User Logged In", userObj);
 
-    alert("User Logged In!");
+        alert("User Logged In!");
 
-    resetForm();
+        resetForm();
+      } else {
+        alert("Incorrect username or password")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
   };
 
   const resetForm = () => {
@@ -36,8 +49,8 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Input placeholder="Username" style={{width:"200px"}} onChange={handleUsernameChange} />
-      <Input placeholder="Password" style={{width:"200px"}} onChange={handlePasswordChange} />
+      <Input placeholder="Username" style={{ width: "200px" }} onChange={handleUsernameChange} />
+      <Input placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
       <Button type="primary" onClick={loginUser}>
         Login
       </Button>
