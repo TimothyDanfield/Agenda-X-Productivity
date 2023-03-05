@@ -16,15 +16,15 @@ router.get('/', (req, res, next) => {
 router
     .route('/user')
     .get(async (req, res, next) => {
-        const { username } = req.query
-        console.log(username)
-        const user = await User.findOne({ username: username })
+        const { email } = req.query
+        console.log(email)
+        const user = await User.findOne({ email: email })
         console.log(user)
         return res.status(200).send(user)
     })
     .post(async (req, res, next) => {
-        const { username, password } = req.body
-        const newUser = new User({ username, password, tasks: [] })
+        const { name, email, password } = req.body
+        const newUser = new User({ name, email, password, tasks: [] })
         const user = await newUser.save()
         res.status(200).send(user)
     })
@@ -32,7 +32,7 @@ router
 
     })
     .delete(async (req, res, next) => {
-        const user = await User.findOneAndDelete({ username: 'nathan' })
+        const user = await User.findOneAndDelete({ email: 'nathan' })
 
         res.status(200).send({ message: `Successfully deleted ${user}` })
 
@@ -43,14 +43,14 @@ router
 router
     .route('/task')
     .get(async (req, res, next) => {
-        const { username } = req.query
-        const user = await User.findOne({ username: username })
+        const { email } = req.query
+        const user = await User.findOne({ email: email })
         const task = await Task.find({ author: user._id })
-        res.status(200).send(task)
+        res.status(200).send(task) 
     })
     .post(async (req, res, next) => {
-        const { taskName, category, reminderTime, username } = req.body
-        const author = await User.findOne({ username: username })
+        const { taskName, category, reminderTime, email } = req.body
+        const author = await User.findOne({ email: email })
         const newTask = new Task({
             taskName,
             author: author._id,
@@ -72,7 +72,7 @@ router
         const deletedTask = await Task.findOneAndDelete({ _id: '640018736bcde81eb348ba94' })
         try {
             const userUpdate = await User.updateOne(
-                { username: 'leo' },
+                { email: 'leo' },
                 { $pull: { tasks: '640018736bcde81eb348ba94' } }
             )
             res.status(200).send(deletedTask)
@@ -84,11 +84,11 @@ router
 // Register endpoints
 router.post('/register', async (req, res, next) => {
     try {
-        const { username, password } = req.body
-        if (!(username && password)) {
+        const { name, email, password } = req.body
+        if (!(email && password && name)) {
             res.status(400).send("All input fields required")
         }
-        const oldUser = await User.findOne({ username })
+        const oldUser = await User.findOne({ email })
         if (oldUser) {
             return res.status(409).send("User already exists.")
         }
@@ -99,7 +99,7 @@ router.post('/register', async (req, res, next) => {
 
         // Create JWT Token
         const token = jwt.sign(
-            { user_id: user._id, username },
+            { user_id: user._id, email: email },
             keys.jwt.secret,
             {
                 expiresIn: "24h"
@@ -118,7 +118,7 @@ router.post('/register', async (req, res, next) => {
 // Login endpoints
 router.post('/login', async (req, res, next) => {
     try {
-        const { username, password } = req.body
+        const { name, email, password } = req.body
     } catch (error) {
 
     }
