@@ -1,20 +1,21 @@
 import React from 'react';
+import './signup.css'
 
 const SignUp = () => {
   return (
     <div className="signup-container">
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Sign Up</h1>
-      <form>
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Name:</label>
-        <input type="text" name="name" />
+      <h1 className="signup" >Sign Up</h1>
+      <form className="main">
+        <label className="label" >Name:</label>
+        <input className="input" type="text" name="name" />
 
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Email:</label>
-        <input type="email" name="email" />
+        <label className="label" >Email:</label>
+        <input className="input"  type="email" name="email" />
 
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Password:</label>
-        <input type="password" name="password" />
+        <label className="label" >Password:</label>
+        <input className="input"  type="password" name="password" />
 
-        <button type="submit" style={{ backgroundColor:'#0099FF', color:'#FFFFFF', padding:'10px 20px', borderRadius:'5px'}} >Sign Up</button>
+        <button className="button" type="submit"  >Sign Up</button>
       </form>
 
     </div>  );

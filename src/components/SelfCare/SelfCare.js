@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import "./selfcare.css"
 const SelfCare = () => {
   const [quote, setQuote] = useState('');
 
@@ -28,7 +29,7 @@ const SelfCare = () => {
    }, []);*/
 
   return (
-    <div>
+    <div className="test">
       <h1>Self Care</h1>
       <p>{quote}</p>
     </div>
