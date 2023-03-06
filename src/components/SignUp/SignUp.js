@@ -1,22 +1,89 @@
-import React from 'react';
+import React, { useState } from "react";
+import "./signup.css";
+
+import { Button, Input } from "antd";
+import axios from "../../utils/axiosConfig";
 
 const SignUp = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  // Signup Functionality:
+
+  const signUp = async (e) => {
+    e.preventDefault()
+    try {
+      if (!password || !name || !email) {
+        alert("Please fill out required information");
+      } else {
+        const newUser = await axios.post(`/api/register`, {
+          name: name,
+          email: email,
+          password: password,
+        });
+        alert("SignUp Success");
+
+        resetForm();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
   return (
     <div className="signup-container">
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Sign Up</h1>
-      <form>
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Name:</label>
-        <input type="text" name="name" />
+      <form className="main">
+        <label className="label">Sign Up</label>
+        <input
+          className="input"
+          placeholder="Name"
+          type="text"
+          name="name"
+          onChange={handleNameChange}
+        />
 
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Email:</label>
-        <input type="email" name="email" />
+        <label className="label"></label>
+        <input
+          className="input"
+          placeholder="Email"
+          type="email"
+          name="email"
+          onChange={handleEmailChange}
+        />
 
-        <label style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Password:</label>
-        <input type="password" name="password" />
+        <label className="label"></label>
+        <input
+          className="input"
+          placeholder="Password"
+          type="password"
+          name="password"
+          onChange={handlePasswordChange}
+        />
 
-        <button type="submit" style={{ backgroundColor:'#0099FF', color:'#FFFFFF', padding:'10px 20px', borderRadius:'5px'}} >Sign Up</button>
+        <button className="button" type="submit" onClick={signUp}>
+          Sign Up
+        </button>
       </form>
-
-    </div>  );
+    </div>
+  );
 };
 export default SignUp;

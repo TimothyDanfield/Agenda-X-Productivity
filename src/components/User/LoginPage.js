@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,  } from "react";
+import { Link } from "react-router-dom"
 import { Button, Input } from "antd";
+import { useNavigate } from 'react-router-dom'
 import axios from '../../utils/axiosConfig'
+import './loginpage.css'
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const [user, setUser] = useState()
+  const navigate = useNavigate()
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -17,17 +21,16 @@ const LoginPage = () => {
   // Login Functionality:
 
   const loginUser = async () => {
-    if (!username || !password) return;
-
-    let userObj = { username: username, password: password };
+    if (!email || !password) return;
+    let userObj = { email: email, password: password };
 
     try {
-      const newUser = await axios.get(`/api/user?username=${username}`)
-      if (newUser.data.username === username && newUser.data.password === password) {
-        console.log("User Logged In", userObj);
-
+      const newUser = await axios.post(`/api/login?email=${email}&&password=${password}`)
+      if (newUser) {
+        setUser(newUser)
         alert("User Logged In!");
-
+        localStorage.setItem('User', JSON.stringify(newUser))
+        navigate('/task')
         resetForm();
       } else {
         alert("Incorrect username or password")
@@ -41,19 +44,26 @@ const LoginPage = () => {
   };
 
   const resetForm = () => {
-    setUsername("");
+    setEmail("");
     setPassword("");
   };
+
 
   // Create funtionality for the sign up here
 
   return (
-    <div>
-      <Input placeholder="Username" style={{ width: "200px" }} onChange={handleUsernameChange} />
-      <Input placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
-      <Button type="primary" onClick={loginUser}>
+    <div className="login-container">
+    <div className="main">
+    <form>
+    <label className="label">Login</label>
+      <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
+      <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
+      <Button className="button" type="primary" onClick={loginUser}>
         Login
       </Button>
+      </form>
+      <Link className="link" to="/signUp">Not registered?</Link>
+      </div>
     </div>
   );
 };

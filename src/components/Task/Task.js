@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Calendar, DatePicker, Button, Input, Select, Badge } from "antd";
 import moment from "moment";
+import axios from '../../utils/axiosConfig'
 const { Option } = Select;
 const Task = () => {
   const [date, setDate] = useState(moment());
@@ -8,15 +9,19 @@ const Task = () => {
   const [category, setCategory] = useState("");
   const [reminderTime, setReminderTime] = useState("");
   const [tasksOnCalendar, setTasksOnCalendar] = useState({});
+
   const handleDateChange = (date) => {
     setDate(date);
   };
+
   const handleTaskNameChange = (e) => {
     setTaskName(e.target.value);
   };
+
   const handleCategoryChange = (value) => {
     if (value === 'Work'){setCategory(<Badge color="green">{value}</Badge>)} else if (value === 'Personal'){setCategory(<Badge color="blue">{value}</Badge>)} else if (value === 'Completed'){setCategory(<Badge color="yellow">{value}</Badge>)} else if (value === 'Not Completed'){setCategory(<Badge color="red">{value}</Badge>)};  
   };
+
   const handleReminderTimeChange = (value) => {
     setReminderTime(value);
   };
@@ -57,6 +62,7 @@ const Task = () => {
 
     setReminderTime("");
   };
+
 
   // add color code to different categories || add completed or not completed
   return (
