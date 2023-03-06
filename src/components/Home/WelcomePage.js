@@ -1,18 +1,36 @@
-import React from 'react'
-import { useState } from 'react';
-//import {Link} from 'react-router-dom'
-
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const WelcomePage = () => {
-  const [username] = useState("");
+  const [username, setUsername] = useState("");
 
   return (
-    <div>Hello {username}! How can we help you be more productive today? </div>
-    
-  )
-}
+    <div className="welcomePage">
+      <h2 className="welcomeNote">
+        {" "}
+        Hello {""}! How can we help you be more productive today?{" "}
+      </h2>
 
-export default WelcomePage
-   
- //I added this page into the NavBar as well. Other than that I've done nothing. -Vesper
-//        use the Link option for the links please :) -Nate
+      <Link to="/task">
+        <button>Work</button>
+      </Link>
+
+      <Link to="not made yet">
+        <button>Vacation</button>
+      </Link>
+
+      <Link to="/selfcare">
+        <button>SelfCare</button>
+      </Link>
+
+      <Link to="not made yet">
+        <button>Social</button>
+      </Link>
+    </div>
+  );
+};
+
+export default WelcomePage;
+
+
