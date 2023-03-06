@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 // User endpoints
 router
     .route('/user')
-    .get(async (req, res, next) => {
+    .get(async (req, res, next) => { 
         const { email } = req.query
         console.log(email)
         const user = await User.findOne({ email: email })

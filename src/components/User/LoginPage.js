@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
 import axios from '../../utils/axiosConfig'
+import './loginpage.css'
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -17,13 +18,13 @@ const LoginPage = () => {
   // Login Functionality:
 
   const loginUser = async () => {
-    if (!username || !password) return;
+    if (!email || !password) return;
 
-    let userObj = { username: username, password: password };
+    let userObj = { email: email, password: password };
 
     try {
-      const newUser = await axios.get(`/api/user?username=${username}`)
-      if (newUser.data.username === username && newUser.data.password === password) {
+      const newUser = await axios.get(`/api/user?email=${email}`)
+      if (newUser.data.email === email && newUser.data.password === password) {
         console.log("User Logged In", userObj);
 
         alert("User Logged In!");
@@ -41,19 +42,22 @@ const LoginPage = () => {
   };
 
   const resetForm = () => {
-    setUsername("");
+    setEmail("");
     setPassword("");
   };
 
   // Create funtionality for the sign up here
 
   return (
-    <div>
-      <Input placeholder="Username" style={{ width: "200px" }} onChange={handleUsernameChange} />
-      <Input placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
-      <Button type="primary" onClick={loginUser}>
+    <div className="login-container">
+    <form className="main">
+    <h1>Login</h1>
+      <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
+      <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
+      <Button className="button" type="primary" onClick={loginUser}>
         Login
       </Button>
+      </form>
     </div>
   );
 };
