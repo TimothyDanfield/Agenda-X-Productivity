@@ -62,7 +62,7 @@ const LoginPage = () => {
         Login
       </Button>
       </form>
-      <Link className="link" to="/signUp">Not registered?</Link>
+      <Link className="link" to="/signUp">Register</Link>
       </div>
     </div>
   );
