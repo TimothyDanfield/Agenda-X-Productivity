@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,  } from "react";
+import { Link } from "react-router-dom"
 import { Button, Input } from "antd";
 import { useNavigate } from 'react-router-dom'
 import axios from '../../utils/axiosConfig'
@@ -52,14 +53,17 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <form className="main">
-        <h1>Login</h1>
-        <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
-        <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
-        <Button className="button" type="primary" onClick={loginUser}>
-          Login
-        </Button>
+    <div className="main">
+    <form>
+    <label className="label">Login</label>
+      <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
+      <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
+      <Button className="button" type="primary" onClick={loginUser}>
+        Login
+      </Button>
       </form>
+      <Link className="link" to="/signUp">Not registered?</Link>
+      </div>
     </div>
   );
 };
