@@ -33,7 +33,7 @@ const SignUp = () => {
           email: email,
           password: password,
         });
-        console.log(newUser);
+        alert("SignUp Success");
 
         resetForm();
       }
