@@ -23,12 +23,13 @@ const SignUp = () => {
 
   // Signup Functionality:
 
-  const signUp = async () => {
+  const signUp = async (e) => {
+    e.preventDefault()
     try {
       if (!password || !name || !email) {
         alert("Please fill out required information");
       } else {
-        const newUser = await axios.post(`/api/user`, {
+        const newUser = await axios.post(`/api/register`, {
           name: name,
           email: email,
           password: password,

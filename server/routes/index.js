@@ -4,11 +4,12 @@ const jwt = require('jsonwebtoken')
 const keys = require('../config/keys')
 const User = require('../models/User')
 const Task = require('../models/Task')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 //  /api
 
-router.get('/', (req, res, next) => {
+router.get('/', auth, (req, res, next) => {
     res.status(200).json({ message: "/api works" })
 })
 
@@ -116,8 +117,12 @@ router.post('/register', async (req, res, next) => {
 // Login endpoints
 router.post('/login', async (req, res, next) => {
     try {
-        const { name, email, password } = req.body
-        console.log(name, email, password)
+        const { email, password } = req.query
+        if(!(email && password)) {
+            console.log("No email or password", email, password)
+            return
+        }
+        console.log(email, password)
         const user = await User.findOne({ email })
 
         if(user && (await bcrypt.compare(password, user.password))) {
