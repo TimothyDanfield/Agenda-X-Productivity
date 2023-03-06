@@ -17,9 +17,7 @@ router
     .route('/user')
     .get(async (req, res, next) => { 
         const { email } = req.query
-        console.log(email)
         const user = await User.findOne({ email: email })
-        console.log(user)
         return res.status(200).send(user)
     })
     .post(async (req, res, next) => {
@@ -95,14 +93,14 @@ router.post('/register', async (req, res, next) => {
 
         //Encrypt user password
         let encryptedPassword = await bcrypt.hash(password, 10)
-        const user = new User({ username, password: encryptedPassword, tasks: [] })
+        const user = new User({ name, email, password: encryptedPassword, tasks: [] })
 
         // Create JWT Token
         const token = jwt.sign(
             { user_id: user._id, email: email },
             keys.jwt.secret,
             {
-                expiresIn: "24h"
+                expiresIn: "12h"
             }
         )
         // save user token
@@ -119,8 +117,24 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const { name, email, password } = req.body
-    } catch (error) {
+        console.log(name, email, password)
+        const user = await User.findOne({ email })
 
+        if(user && (await bcrypt.compare(password, user.password))) {
+            const token = jwt.sign(
+                { user_id: user._id, email},
+                keys.jwt.secret,
+                {
+                    expiresIn: '12h'
+                }
+            )
+
+            user.token = token
+            return res.status(200).json({ user: user, token: user.token })
+        }
+        return res.status(400).send("Invalid Credentials")
+    } catch (error) {
+        console.log(error)
     }
 
 })
