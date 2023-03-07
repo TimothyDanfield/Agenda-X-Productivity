@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
+
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.reload(true)
+  }
+
   return (
     <div style={{ textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/signup">
@@ -24,6 +30,7 @@ const NavBar = () => {
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/contact">
         Contact Us
       </Link>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
