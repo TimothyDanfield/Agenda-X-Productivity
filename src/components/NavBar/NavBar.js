@@ -8,6 +8,12 @@ const handleLogOut = () => {
 }
 
 const NavBar = () => {
+
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.reload(true)
+  }
+
   return (
     <div style={{padding:"20px",   textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/signup">
@@ -30,6 +36,7 @@ const NavBar = () => {
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/contact">
         Contact Us
       </Link>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
