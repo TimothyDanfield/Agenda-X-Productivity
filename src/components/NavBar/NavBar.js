@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const handleLogOut = () => {
+  localStorage.removeItem('User')
+  alert("User Signed Out!")
+  navigate('/login')
+}
+
 const NavBar = () => {
   return (
-    <div style={{ textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
+    <div style={{padding:"20px",   textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/signup">
         SignUp
       </Link>

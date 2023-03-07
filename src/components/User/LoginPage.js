@@ -48,6 +48,9 @@ const LoginPage = () => {
     setPassword("");
   };
 
+  // signout functionality 
+
+
 
   // Create funtionality for the sign up here
 
