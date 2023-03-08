@@ -1,4 +1,4 @@
-import React, { useState,  } from "react";
+import React, { useState, } from "react";
 import { Link } from "react-router-dom"
 import { Button, Input } from "antd";
 import { useNavigate } from 'react-router-dom'
@@ -55,16 +55,16 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-    <div className="main">
-    <form>
-    <label className="label">Login</label>
-      <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
-      <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
-      <Button className="button" type="primary" onClick={loginUser}>
-        Login
-      </Button>
-      </form>
-      <Link className="link" to="/signUp">Register</Link>
+      <div className="main">
+        <form>
+          <label className="label">Login</label>
+          <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
+          <Input className="input" placeholder="Password" style={{ width: "200px" }} onChange={handlePasswordChange} />
+          <Button className="button" type="primary" onClick={loginUser}>
+            Login
+          </Button>
+        </form>
+        <Link className="link" to="/signUp">Register</Link>
       </div>
     </div>
   );
