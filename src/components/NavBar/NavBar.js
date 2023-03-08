@@ -1,11 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
 
-const handleLogOut = () => {
-  localStorage.removeItem('User')
-  alert("User Signed Out!")
-  navigate('/login')
-}
 
 const NavBar = () => {
 
@@ -36,6 +31,10 @@ const NavBar = () => {
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/contact">
         Contact Us
       </Link>
+      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/profile">
+       Profile
+      </Link>
+
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
