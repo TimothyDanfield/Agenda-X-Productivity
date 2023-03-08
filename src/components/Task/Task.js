@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar, DatePicker, Button, Input, Select, Badge } from "antd";
 import moment from "moment";
 import axios from '../../utils/axiosConfig'
+import './task.css'
 const { Option } = Select;
 const Task = () => {
   const [date, setDate] = useState(moment());
