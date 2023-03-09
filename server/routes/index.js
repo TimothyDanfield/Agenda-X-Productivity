@@ -99,8 +99,8 @@ router
 // Register endpoints
 router.post('/register', async (req, res, next) => {
     try {
-        const { name, email, password } = req.body
-        if (!(email && password && name)) {
+        const { name, email, password, securityQuestion, securityAnswer } = req.body
+        if (!(email && password && name && securityQuestion && securityAnswer)) {
             res.status(400).send("All input fields required")
         }
         const oldUser = await User.findOne({ email })
@@ -110,7 +110,7 @@ router.post('/register', async (req, res, next) => {
 
         //Encrypt user password
         let encryptedPassword = await bcrypt.hash(password, 10)
-        const user = new User({ name, email, password: encryptedPassword, tasks: [] })
+        const user = new User({ name, email, password: encryptedPassword, securityQuestion, securityAnswer, tasks: [] })
 
         // Create JWT Token
         const token = jwt.sign(
