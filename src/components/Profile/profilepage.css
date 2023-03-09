@@ -1,0 +1,78 @@
+.profileBody {
+    height: 85vh;
+    margin: 0;
+    padding-top: 5%;
+    font-family: sans-serif;
+    background-color: #6B48FF;
+  }
+  
+  .profile-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 600px;
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 10px;
+    color: #333333;
+  }
+  
+  h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .profileInput {
+    font-size: 20px;
+    padding: 15px;
+    width: 95%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #F2E6FF;
+    color: #333333;
+  }
+
+  input:focus {
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(107, 72, 255, 0.4);
+  }
+  
+  .btn-primary {
+    background-color: #6B48FF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5A2FC2;
+  }

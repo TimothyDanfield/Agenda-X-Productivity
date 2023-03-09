@@ -29,7 +29,7 @@ const LoginPage = () => {
       if (newUser) {
         setUser(newUser)
         alert("User Logged In!");
-        localStorage.setItem('User', JSON.stringify(newUser))
+        localStorage.setItem('User', JSON.stringify(newUser.data))
         navigate('/task')
         resetForm();
       } else {

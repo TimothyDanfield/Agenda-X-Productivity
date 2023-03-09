@@ -4,38 +4,58 @@ import { Link, } from "react-router-dom";
 
 const NavBar = () => {
 
+  let user = localStorage.getItem('User')
+  user = true
   const handleLogout = () => {
     localStorage.clear()
     window.location.reload(true)
   }
 
   return (
-    <div style={{padding:"20px",   textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/signup">
-        SignUp
-      </Link>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/login">
-        Login
-      </Link>
+    <div>
+      {user ?
+        <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/signup">
+            SignUp
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/login">
+            Login
+          </Link>
 
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/task">
-        Work
-      </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/task">
+            Work
+          </Link>
 
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/selfcare">
-        SelfCare
-      </Link>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/aboutus">
-        About Us
-      </Link>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/contact">
-        Contact Us
-      </Link>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/profile">
-       Profile
-      </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/selfcare">
+            SelfCare
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/aboutus">
+            About Us
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/contact">
+            Contact Us
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/profile">
+            Profile
+          </Link>
 
-      <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
+        </div> :
+        <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/signup">
+            SignUp
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/login">
+            Login
+          </Link>
+
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/aboutus">
+            About Us
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/contact">
+            Contact Us
+          </Link>
+        </div>}
     </div>
   );
 };

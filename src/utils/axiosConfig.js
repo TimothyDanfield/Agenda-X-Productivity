@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const getToken = () => {
     const user = JSON.parse(localStorage.getItem('User'))
-    return user ? user.data.token : ''
+    return user ? user.token : ''
 }
 
 const instance = axios.create({
