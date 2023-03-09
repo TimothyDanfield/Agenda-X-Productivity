@@ -15,20 +15,6 @@ h1 {
   text-align: center;
 }
 
-<<<<<<< HEAD
-  .link {
-margin-left: 20%;
-text-decoration: none;
-color: rgb(52,152,219);
-font-size: 1.3rem;
-position: absolute;
-bottom: 420px;
-right: 680px;
-background-color: #f2f2f2; 
-border: 2px solid #ccc; 
-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75); 
-  }
-=======
 .main {
   width: 50%;
   background: red;
@@ -104,10 +90,11 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   color: rgb(52, 152, 219);
   font-size: 1.3rem;
   position: absolute;
-  top: 35%;
-  left: 40%;
+  top: 480px;
+  background-color: #f2f2f2;
+  border: 2px solid #ccc;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
->>>>>>> 7dde90164bdfbe5b6509515643aa333b5bb4771d
 
 
 link:hover {

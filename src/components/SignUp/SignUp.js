@@ -8,6 +8,8 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState("")
+  const [securityAnswer, setSecurityAnswer] = useState("")
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -21,20 +23,30 @@ const SignUp = () => {
     setName(e.target.value);
   };
 
+  const handleSecurityQuestion = (e) => {
+    setSecurityQuestion(e.target.value)
+  }
+  console.log(securityQuestion)
+  const handleSecurityAnswer = (e) => {
+    setSecurityAnswer(e.target.value)
+  }
+
   // Signup Functionality:
 
   const signUp = async (e) => {
     e.preventDefault()
     try {
-      if (!password || !name || !email) {
+      if (!password || !name || !email || !securityQuestion || !securityAnswer) {
         alert("Please fill out required information");
       } else {
         const newUser = await axios.post(`/api/register`, {
           name: name,
           email: email,
           password: password,
+          securityQuestion: securityQuestion,
+          securityAnswer: securityAnswer
         });
-        alert("SignUp Success");
+        alert("SignUp Success"); 
 
         resetForm();
       }
@@ -61,7 +73,6 @@ const SignUp = () => {
           onChange={handleNameChange}
         />
 
-        <label className="label"></label>
         <input
           className="input"
           placeholder="Email"
@@ -70,13 +81,28 @@ const SignUp = () => {
           onChange={handleEmailChange}
         />
 
-        <label className="label"></label>
         <input
           className="input"
           placeholder="Password"
           type="password"
           name="password"
           onChange={handlePasswordChange}
+        />
+
+        <select className="input security" onChange={handleSecurityQuestion}>
+          <option value="N/A">Security Question</option>
+          <option value="What is your oldest sibling's middle name?">What is your oldest sibling's middle name?</option>
+          <option value="Where did you meet your spouse?">Where did you meet your spouse?</option>
+          <option value="What was your first car?">What was your first car?</option>
+          <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+        </select>
+
+        <input
+          className="input"
+          placeholder="Security Answer"
+          type="text"
+          name="security"
+          onChange={handleSecurityAnswer}
         />
 
         <button className="button" type="submit" onClick={signUp}>

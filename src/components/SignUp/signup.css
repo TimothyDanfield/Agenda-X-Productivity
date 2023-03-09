@@ -12,8 +12,7 @@
 }
 
 .main {
-  width: 50%;
- 
+  min-width: 50%;
   background: red;
   overflow: hidden;
   background: url("/public/signup.jpeg") no-repeat center/cover;
@@ -22,6 +21,9 @@
   margin-left: auto;
   margin-right: auto;
   padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
 }
 
 .signup {
@@ -49,19 +51,16 @@
   width: 60%;
   height: 20px;
   background: #e0dede;
-  justify-content: center;
-  display: flex;
-  margin: 20px auto;
-  padding: 10px;
-  border: none;
-  outline: none;
   border-radius: 5px;
+}
+
+.security {
+  width: 90% !important;
+  height: 40px;
 }
 
 .button {
   width: 50%;
-  
-  margin: 10px auto;
   justify-content: center;
   display: block;
   color: #fff;

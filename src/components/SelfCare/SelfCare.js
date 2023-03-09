@@ -1,7 +1,8 @@
 import React from 'react';
-import axios from 'axios'
+import axios from '../../utils/axiosConfig'
 import { useEffect, useState } from 'react'
 import "./selfcare.css"
+
 const SelfCare = () => {
   const [quote, setQuote] = useState('');
 
@@ -20,6 +21,7 @@ const SelfCare = () => {
   useEffect(() => {
     randomQuote()
   }, [])
+
 
   /* React.useEffect(() => {
      axios.get('https://zenquotes.io/api/random')
