@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Image } from 'antd';
+import { Form, Input, Button, Image } from 'semantic-ui-react';
 
 const ProfilePage = () => {
   const [password, setPassword] = useState('');
