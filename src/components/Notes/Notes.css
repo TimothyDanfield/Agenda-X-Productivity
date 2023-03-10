@@ -2,7 +2,8 @@
     margin: 0 auto;
     font-family: Arial, sans-serif;
     background: linear-gradient(to top, #0f0c29, #302b63, #24243e);
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     padding-top: 5%;
 }
 
