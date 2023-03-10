@@ -34,6 +34,25 @@ const ProfilePage = () => {
 
   return (
     <div className='profileBody'>
+      <div className='taskContainer'>
+        <h1>Tasks:</h1>
+        {user && user.user.tasks.map((task, index) => {
+          return (
+            <div key={index}>
+              <div className='profileTask'>
+                <div>
+                  <h5 style={{margin: '0'}}>Task: {task.taskName}</h5>
+                  <p>Category: {task.category}</p>
+                </div>
+                <div>
+                  <p>Reminder Time:</p>
+                  <p>{task.reminderTime}</p>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
       <div className="profile-settings">
         <h1>Profile Settings</h1>
         <form>
@@ -48,13 +67,13 @@ const ProfilePage = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Current Password</label>
-            <input type="password" id="currentPassword" name="password" required={true} className='profileInput' placeholder="Enter your password" onChange={(e) => setCurrentPassword(e.target.value)} />
+            <label htmlFor="password">Update Password</label>
+            <input type="password" id="password" name="password" className='profileInput' placeholder="Enter your password" onChange={(e) => setNewPassword(e.target.value)} />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Update Password</label>
-            <input type="password" id="password" name="password" className='profileInput' placeholder="Enter your password" onChange={(e) => setNewPassword(e.target.value)} />
+            <label htmlFor="password">Current Password</label>
+            <input type="password" id="currentPassword" name="password" required={true} className='profileInput' placeholder="Enter your password" onChange={(e) => setCurrentPassword(e.target.value)} />
           </div>
 
           <button className="btn-primary" type="submit" onClick={handleSubmit}>Save Changes</button>

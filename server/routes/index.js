@@ -17,8 +17,8 @@ router.get('/', auth, (req, res, next) => {
 router
     .route('/user')
     .get(async (req, res, next) => {
-        const { email } = req.query
-        const user = await User.findOne({ email: email })
+        const { email } = req.body
+        const user = await User.findOne({ email: email }).populate('tasks')
         return res.status(200).send(user)
     })
     .post(async (req, res, next) => {
@@ -147,7 +147,7 @@ router.post('/login', async (req, res, next) => {
         if (!(email && password)) {
             return res.status(400).json({ error: "Please fill out all fields"})
         }
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).populate('tasks')
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(

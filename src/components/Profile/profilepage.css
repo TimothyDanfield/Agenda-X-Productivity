@@ -4,46 +4,49 @@
     padding-top: 5%;
     font-family: sans-serif;
     background-color: #6B48FF;
-  }
-  
-  .profile-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profile-settings {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
+    width: 45%;
     max-width: 600px;
     background-color: #FFFFFF;
     padding: 40px;
     border-radius: 10px;
     color: #333333;
-  }
-  
-  h1 {
+}
+
+h1 {
     font-size: 48px;
     font-weight: bold;
     margin-bottom: 30px;
     text-align: center;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-  }
-  
-  .form-group {
+}
+
+.form-group {
     width: 100%;
     margin-bottom: 20px;
-  }
-  
-  label {
+}
+
+label {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-  }
-  
-  .profileInput {
+}
+
+.profileInput {
     font-size: 20px;
     padding: 15px;
     width: 95%;
@@ -52,14 +55,14 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #F2E6FF;
     color: #333333;
-  }
+}
 
-  input:focus {
+input:focus {
     outline: none;
     box-shadow: 0px 2px 4px rgba(107, 72, 255, 0.4);
-  }
-  
-  .btn-primary {
+}
+
+.btn-primary {
     background-color: #6B48FF;
     color: #FFFFFF;
     border: none;
@@ -71,8 +74,43 @@
     cursor: pointer;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease-in-out;
-  }
-  
-  .btn-primary:hover {
+}
+
+.btn-primary:hover {
     background-color: #5A2FC2;
-  }
+}
+
+.taskContainer {
+    width: 45%;
+    max-width: 600px;
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 10px;
+    color: #333333;
+    height: 76%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.profileTask {
+    border: 1px solid black;
+    margin-bottom: 10px;
+    background-color: #F2E6FF;
+    min-height: 5vh;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 15px;
+    width: 95%;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #F2E6FF;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileTask:hover {
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(107, 72, 255, 0.4);
+}
