@@ -1,0 +1,17 @@
+.aboutus {
+  background-image: url("/public/signup.jpeg") no-repeat center/cover;
+    background-color: blue;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 95vh;
+    font-family: "Jost", sans-serif;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    padding-top: 80px;
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+
+  .aboutus {
+    background: url("/public/wallpaperflare.com_wallpaper.jpg") no-repeat center/cover
+  }
