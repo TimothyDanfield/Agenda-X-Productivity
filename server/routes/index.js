@@ -28,16 +28,26 @@ router
         res.status(200).send(user)
     })
     .put(async (req, res, next) => {
-        const { name, email, password, _id, updatePassword } = req.body
+        const { name, email, currentPassword, newPassword, _id } = req.body
         const userConfirm = await User.findById({ _id })
-        let encryptedPassword = await bcrypt.hash(updatePassword, 10)
-        if (userConfirm && (await bcrypt.compare(password, userConfirm.password))) {
+        let encryptedPassword = await bcrypt.hash(newPassword, 10)
+        if (userConfirm && (await bcrypt.compare(currentPassword, userConfirm.password))) {
+            const token = jwt.sign(
+                { user_id: _id, email: email },
+                keys.jwt.secret,
+                {
+                    expiresIn: "12h"
+                }
+            )
             const user = await User.findByIdAndUpdate(_id, {
                 name: name ? name : userConfirm.name,
                 email: email ? email : userConfirm.email,
-                password: updatePassword ? encryptedPassword : userConfirm.password
+                password: newPassword ? encryptedPassword : userConfirm.password,
             })
-            res.status(200).send({ message: "User updated", user })
+            user.token = token
+            user.save()
+            console.log(user.token)
+            res.status(200).send({ user: user, token: user.token })
         } else {
             res.status(401).send({ error: "Incorrect Password" })
         }
