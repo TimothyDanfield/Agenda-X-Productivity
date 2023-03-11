@@ -1,27 +1,48 @@
-import React, { useState } from 'react';
-import { FaRegTimesCircle } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react';
+import { FaRegTimesCircle, FaPen } from 'react-icons/fa'
+import toast, { Toaster } from 'react-hot-toast'
+import axios from '../../utils/axiosConfig'
 import './Notes.css';
 
 const Notes = () => {
     const [notes, setNotes] = useState([]);
+    const [user, setUser] = useState('')
+    const [refresh, setRefresh] = useState('')
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [notesError, setNotesError] = useState('')
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setNotes([...notes, { title, content }]);
-        setTitle('');
-        setContent('');
+    const email = JSON.parse(localStorage.getItem('User')) ? JSON.parse(localStorage.getItem('User')).email : ''
+
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const userObj = await axios.get(`/api/user?email=${email}`)
+                setUser(userObj.data)
+                setNotes(userObj.data.notes)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getUser()
+    }, [refresh])
+
+    
+    const handleSubmit = async (event) => {
+        const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&email=${email}`)
     };
 
-    const handleDelete = (note) => {
-        const title = note.title
-        console.log(note.title)
-        setNotes((notes) => notes.filter((note) => {
-            return note.title !== title
-        }))
+    const handleDelete = async (note) => {
+        const email = user.email
+        const _id = note._id
+        const deletedNote = await axios.delete(`/api/note?email=${email}&&_id=${_id}`)
+        setRefresh(!refresh)
+        toast.success('Note deleted')
     }
 
+    const handleEdit = async (note) => {
+
+    }
 
 
     return (
@@ -46,18 +67,20 @@ const Notes = () => {
                 </form>
             </div>
             <div className='notesDiv'>
-                {notes.map((note, index) => (
+                {notes && notes.map((note, index) => (
                     <div key={index} className="Note">
                         <div className='noteContent'>
-                            <h2>{note.title}</h2>
+                            <h2 className='noteHeader'>{note.title}</h2>
                             <textarea className='noteText forms' value={note.content} readOnly={true}></textarea>
                         </div>
                         <div>
+                            <FaPen className='edit' onClick={() => handleEdit(note)}/>
                             <FaRegTimesCircle className='delete' onClick={() => handleDelete(note)} />
                         </div>
                     </div>
                 ))}
             </div>
+            <Toaster />
         </div>
     );
 }

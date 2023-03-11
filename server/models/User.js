@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
             type: ObjectId,
             ref: 'Task'
         }
+    ],
+    notes: [
+        {
+            type: ObjectId,
+            ref: 'Note'
+        }
     ]
 })
 

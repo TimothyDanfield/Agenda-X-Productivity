@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const keys = require('../config/keys')
 const User = require('../models/User')
 const Task = require('../models/Task')
+const Note = require('../models/Notes')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -17,8 +18,8 @@ router.get('/', auth, (req, res, next) => {
 router
     .route('/user')
     .get(async (req, res, next) => {
-        const { email } = req.body
-        const user = await User.findOne({ email: email }).populate('tasks')
+        const { _id } = req.query
+        const user = await User.findById(_id).populate('tasks').populate('notes')
         return res.status(200).send(user)
     })
     .post(async (req, res, next) => {
@@ -28,8 +29,9 @@ router
         res.status(200).send(user)
     })
     .put(async (req, res, next) => {
-        const { name, email, currentPassword, newPassword, _id } = req.body
+        const { name, email, currentPassword, newPassword, _id } = req.query
         const userConfirm = await User.findById({ _id })
+        console.log(userConfirm)
         let encryptedPassword = await bcrypt.hash(newPassword, 10)
         if (userConfirm && (await bcrypt.compare(currentPassword, userConfirm.password))) {
             const token = jwt.sign(
@@ -43,7 +45,7 @@ router
                 name: name ? name : userConfirm.name,
                 email: email ? email : userConfirm.email,
                 password: newPassword ? encryptedPassword : userConfirm.password,
-            })
+            }).populate('tasks').populate('notes')
             user.token = token
             user.save()
             console.log(user.token)
@@ -93,12 +95,13 @@ router
         }
     })
     .delete(async (req, res, next) => {
-        const _id = req.params
+        const { _id, email } = req.body
+        const author = await User.findOne({ email: email })
         const deletedTask = await Task.findOneAndDelete({ _id })
         try {
             const userUpdate = await User.updateOne(
-                { email: 'leo' },
-                { $pull: { tasks: '640018736bcde81eb348ba94' } }
+                { email: author.email },
+                { $pull: { tasks: _id } }
             )
             res.status(200).send(deletedTask, userUpdate)
         } catch (error) {
@@ -147,7 +150,7 @@ router.post('/login', async (req, res, next) => {
         if (!(email && password)) {
             return res.status(400).json({ error: "Please fill out all fields"})
         }
-        const user = await User.findOne({ email }).populate('tasks')
+        const user = await User.findOne({ email }).populate('tasks').populate('notes')
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
@@ -167,5 +170,52 @@ router.post('/login', async (req, res, next) => {
     }
 
 })
+
+router
+    .route('/note')
+    .get(async (req, res, next) => {
+        const { email } = req.body
+        const user = await User.findOne({ email: email })
+        const note = await Note.find({ author: user._id })
+        console.log(note)
+        res.status(200).send(note)
+    })
+    .post(async (req, res, next) => {
+        const { title, content, email } = req.query
+        const author = await User.findOne({ email: email })
+        const newNote = new Note({
+            title,
+            author: author._id,
+            content
+        })
+        try {
+            const note = await newNote.save()
+            author.notes = author.notes.concat(note._id)
+            await author.save()
+            res.status(200).send(author)
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: "No author" })
+        }
+    })
+    .delete(async (req, res, next) => {
+        const { _id, email } = req.query
+        console.log(email)
+        console.log(_id)
+        const author = await User.findOne({ email: email })
+        const deletedNote = await Note.findOneAndDelete({ _id })
+        try {
+            const userUpdate = await User.updateOne(
+                { email: author.email },
+                { $pull: { notes: _id } }
+            )
+            res.status(200).send(author)
+        } catch (error) {
+            console.log(error)
+            res.status(404).send('Error')
+        }
+    })
+
+
 
 module.exports = router

@@ -68,6 +68,11 @@ button[type='submit'] {
     min-width: 100%;
 }
 
+.edit {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
 .notesHeader {
     background-color: white;
     padding: 20px;
@@ -78,6 +83,13 @@ button[type='submit'] {
 
 .noteText {
     height: 15vh;
+    width: 100%;
+}
+
+.noteHeader {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .noteContent {

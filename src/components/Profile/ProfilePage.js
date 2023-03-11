@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Image } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './profilepage.css'
+import toast, { Toaster } from 'react-hot-toast'
 import axios from '../../utils/axiosConfig'
 
 
@@ -10,38 +11,46 @@ const ProfilePage = () => {
   const [email, setEmail] = useState('')
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [hidden, setHidden] = useState(false)
+  const [user, setUser] = useState('')
+  const [refresh, setRefresh] = useState('')
 
-  const user = JSON.parse(localStorage.getItem('User'))
+  const id = JSON.parse(localStorage.getItem('User'))._id
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userObj = await axios.get(`/api/user?_id=${id}`)
+        setUser(userObj.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUser()
+  }, [refresh])
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateUser = await axios.put('/api/user', {
-      name,
-      email,
-      currentPassword,
-      newPassword,
-      _id: user._id
-    })
-    localStorage.setItem('User', JSON.stringify(updateUser.data))
-    console.log(updateUser)
+    const updateUser = await axios.put(`/api/user?name=${name}&&email=${email}&&currentPassword=${currentPassword}&&newPassword=${newPassword}&&_id=${user._id}`)
+    localStorage.setItem('User', JSON.stringify(updateUser.data.user))
+    localStorage.setItem('Token', JSON.stringify(updateUser.data.token))
+    toast.success('Successfully updated information')
+    setRefresh(!refresh)
     setName('')
     setEmail('')
     setNewPassword('')
-    setImageUrl('')
   };
 
   return (
     <div className='profileBody'>
       <div className='taskContainer'>
         <h1>Tasks:</h1>
-        {user && user.user.tasks.map((task, index) => {
+        {user && user.tasks.map((task, index) => {
           return (
             <div key={index}>
               <div className='profileTask'>
                 <div>
-                  <h5 style={{margin: '0'}}>Task: {task.taskName}</h5>
+                  <h5 style={{ margin: '0' }}>Task: {task.taskName}</h5>
                   <p>Category: {task.category}</p>
                 </div>
                 <div>
@@ -79,6 +88,7 @@ const ProfilePage = () => {
           <button className="btn-primary" type="submit" onClick={handleSubmit}>Save Changes</button>
         </form>
       </div>
+      <Toaster />
     </div>
   )
 }
