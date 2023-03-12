@@ -10,6 +10,10 @@ const NavBar = () => {
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/login">
         Login
       </Link>
+      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/welcome">
+        Welcome Page
+      </Link>
+
 
       <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/task">
         Work

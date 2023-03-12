@@ -1,19 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import './WelcomePage.css';
+import { Button, Input } from "antd";
 
 const WelcomePage = () => {
-  const [username, setUsername] = useState("");
+  const user = JSON.parse(localStorage.getItem('User'))
+  const [username, setUsername] = useState('Vesper');
+
 
   return (
     <div className="welcomePage">
       <h2 className="welcomeNote">
-        {" "}
-        Hello {""}! How can we help you be more productive today?{" "}
+        Hello {username}! How can we help you be more productive today?
       </h2>
 
       <Link to="/task">
-        <button>Work</button>
+        <Button className = 'workButton'>Work</Button>
       </Link>
 
       <Link to="not made yet">
