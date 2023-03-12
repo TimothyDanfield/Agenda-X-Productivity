@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar, DatePicker, Button, Input, Select, Badge } from "antd";
 import moment from "moment";
 import axios from '../../utils/axiosConfig'
+import './task.css'
 const { Option } = Select;
 const Task = () => {
   const [date, setDate] = useState(moment());
@@ -19,7 +20,7 @@ const Task = () => {
   };
 
   const handleCategoryChange = (value) => {
-    if (value === 'Work'){setCategory(<Badge color="green">{value}</Badge>)} else if (value === 'Personal'){setCategory(<Badge color="blue">{value}</Badge>)} else if (value === 'Completed'){setCategory(<Badge color="yellow">{value}</Badge>)} else if (value === 'Not Completed'){setCategory(<Badge color="red">{value}</Badge>)};  
+    if (value === 'Work') { setCategory(<Badge color="green">{value}</Badge>) } else if (value === 'Personal') { setCategory(<Badge color="blue">{value}</Badge>) } else if (value === 'Completed') { setCategory(<Badge color="yellow">{value}</Badge>) } else if (value === 'Not Completed') { setCategory(<Badge color="red">{value}</Badge>) };
   };
 
   const handleReminderTimeChange = (value) => {
@@ -38,20 +39,18 @@ const Task = () => {
       date: date.format("YYYY-MM-DD"),
     };
     console.log("Task Created", taskObj);
-    
+
     alert("Task Created!");
     let newTasksOnCalendarObj = Object.assign({}, tasksOnCalendar);
     newTasksOnCalendarObj[date.format("YYYY-MM-DD")]
       ? newTasksOnCalendarObj[date.format("YYYY-MM-DD")].push(taskObj)
       : (newTasksOnCalendarObj[date.format("YYYY-MM-DD")] = [taskObj]);
     console.log("newTasksOnCalendar", newTasksOnCalendarObj);
-    
+
     setTasksOnCalendar(newTasksOnCalendarObj)
     resetForm();
-    
-  };
 
-  
+  }
 
   const resetForm = () => {
     setDate(moment());
@@ -101,7 +100,7 @@ const Task = () => {
         Create Task
       </Button>
     </div>
-  
+
   );
 };
 

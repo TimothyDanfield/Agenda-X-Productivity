@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const keys = require('../config/keys')
 const User = require('../models/User')
 const Task = require('../models/Task')
+const Note = require('../models/Notes')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -16,9 +17,9 @@ router.get('/', auth, (req, res, next) => {
 // User endpoints
 router
     .route('/user')
-    .get(async (req, res, next) => { 
-        const { email } = req.query
-        const user = await User.findOne({ email: email })
+    .get(async (req, res, next) => {
+        const { _id } = req.query
+        const user = await User.findById(_id).populate('tasks').populate('notes')
         return res.status(200).send(user)
     })
     .post(async (req, res, next) => {
@@ -28,13 +29,40 @@ router
         res.status(200).send(user)
     })
     .put(async (req, res, next) => {
-
+        const { name, email, currentPassword, newPassword, _id } = req.query
+        const userConfirm = await User.findById({ _id })
+        console.log(userConfirm)
+        let encryptedPassword = await bcrypt.hash(newPassword, 10)
+        if (userConfirm && (await bcrypt.compare(currentPassword, userConfirm.password))) {
+            const token = jwt.sign(
+                { user_id: _id, email: email },
+                keys.jwt.secret,
+                {
+                    expiresIn: "12h"
+                }
+            )
+            const user = await User.findByIdAndUpdate(_id, {
+                name: name ? name : userConfirm.name,
+                email: email ? email : userConfirm.email,
+                password: newPassword ? encryptedPassword : userConfirm.password,
+            }).populate('tasks').populate('notes')
+            user.token = token
+            user.save()
+            console.log(user.token)
+            res.status(200).send({ user: user, token: user.token })
+        } else {
+            res.status(401).send({ error: "Incorrect Password" })
+        }
     })
     .delete(async (req, res, next) => {
-        const user = await User.findOneAndDelete({ email: 'nathan' })
-
-        res.status(200).send({ message: `Successfully deleted ${user}` })
-
+        const { _id, password } = req.body
+        const user = await User.findById({ _id })
+        if (user && (await bcrypt.compare(password, user.password))) {
+            const userToDelete = await User.findOneAndDelete({ _id })
+            return res.status(200).send({ message: `Successfully deleted ${userToDelete.email}` })
+        } else {
+            return res.status(401).send({ error: "Incorrect password" })
+        }
     })
 
 
@@ -45,7 +73,7 @@ router
         const { email } = req.query
         const user = await User.findOne({ email: email })
         const task = await Task.find({ author: user._id })
-        res.status(200).send(task) 
+        res.status(200).send(task)
     })
     .post(async (req, res, next) => {
         const { taskName, category, reminderTime, email } = req.body
@@ -67,14 +95,15 @@ router
         }
     })
     .delete(async (req, res, next) => {
-        const _id = req.params
-        const deletedTask = await Task.findOneAndDelete({ _id: '640018736bcde81eb348ba94' })
+        const { _id, email } = req.body
+        const author = await User.findOne({ email: email })
+        const deletedTask = await Task.findOneAndDelete({ _id })
         try {
             const userUpdate = await User.updateOne(
-                { email: 'leo' },
-                { $pull: { tasks: '640018736bcde81eb348ba94' } }
+                { email: author.email },
+                { $pull: { tasks: _id } }
             )
-            res.status(200).send(deletedTask)
+            res.status(200).send(deletedTask, userUpdate)
         } catch (error) {
             console.log(error.errors)
         }
@@ -83,8 +112,8 @@ router
 // Register endpoints
 router.post('/register', async (req, res, next) => {
     try {
-        const { name, email, password } = req.body
-        if (!(email && password && name)) {
+        const { name, email, password, securityQuestion, securityAnswer } = req.body
+        if (!(email && password && name && securityQuestion && securityAnswer)) {
             res.status(400).send("All input fields required")
         }
         const oldUser = await User.findOne({ email })
@@ -94,7 +123,7 @@ router.post('/register', async (req, res, next) => {
 
         //Encrypt user password
         let encryptedPassword = await bcrypt.hash(password, 10)
-        const user = new User({ name, email, password: encryptedPassword, tasks: [] })
+        const user = new User({ name, email, password: encryptedPassword, securityQuestion, securityAnswer, tasks: [] })
 
         // Create JWT Token
         const token = jwt.sign(
@@ -109,7 +138,7 @@ router.post('/register', async (req, res, next) => {
         user.save()
         res.status(201).json({ user: user, token: user.token })
     } catch (error) {
-
+        res.status(400).json({ error: error })
     }
 
 })
@@ -118,16 +147,14 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.query
-        if(!(email && password)) {
-            console.log("No email or password", email, password)
-            return
+        if (!(email && password)) {
+            return res.status(400).json({ error: "Please fill out all fields"})
         }
-        console.log(email, password)
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).populate('tasks').populate('notes')
 
-        if(user && (await bcrypt.compare(password, user.password))) {
+        if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
-                { user_id: user._id, email},
+                { user_id: user._id, email },
                 keys.jwt.secret,
                 {
                     expiresIn: '12h'
@@ -139,9 +166,56 @@ router.post('/login', async (req, res, next) => {
         }
         return res.status(400).send("Invalid Credentials")
     } catch (error) {
-        console.log(error)
+        res.status(400).json({ error: error })
     }
 
 })
+
+router
+    .route('/note')
+    .get(async (req, res, next) => {
+        const { email } = req.body
+        const user = await User.findOne({ email: email })
+        const note = await Note.find({ author: user._id })
+        console.log(note)
+        res.status(200).send(note)
+    })
+    .post(async (req, res, next) => {
+        const { title, content, email } = req.query
+        const author = await User.findOne({ email: email })
+        const newNote = new Note({
+            title,
+            author: author._id,
+            content
+        })
+        try {
+            const note = await newNote.save()
+            author.notes = author.notes.concat(note._id)
+            await author.save()
+            res.status(200).send(author)
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({ error: "No author" })
+        }
+    })
+    .delete(async (req, res, next) => {
+        const { _id, email } = req.query
+        console.log(email)
+        console.log(_id)
+        const author = await User.findOne({ email: email })
+        const deletedNote = await Note.findOneAndDelete({ _id })
+        try {
+            const userUpdate = await User.updateOne(
+                { email: author.email },
+                { $pull: { notes: _id } }
+            )
+            res.status(200).send(author)
+        } catch (error) {
+            console.log(error)
+            res.status(404).send('Error')
+        }
+    })
+
+
 
 module.exports = router

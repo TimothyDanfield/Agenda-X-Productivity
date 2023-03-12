@@ -15,10 +15,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    securityQuestion: {
+        type: String,
+        required: true,
+    },
+    securityAnswer: {
+        type: String,
+        required: true,
+    },
     tasks: [
         {
             type: ObjectId,
             ref: 'Task'
+        }
+    ],
+    notes: [
+        {
+            type: ObjectId,
+            ref: 'Note'
         }
     ]
 })

@@ -1,57 +1,77 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
+import emailjs from 'emailjs-com'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import './contactus.css'
 const ContactUs = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const sendEmail = (e) => {
+    e.preventDefault()
 
-    // Send email here
-
-    alert("Email sent!");
-
-    // Reset form fields
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setMessage("");
-  };
+    emailjs.sendForm('service_s0a4xlw', 'template_0reyskf', e.target, 'pjlYxQ6jLWiRuqeFA')
+      .then((result) => {
+        console.log(result.text)
+        toast('Email sent', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+      })
+      .catch((error) => {
+        console.log(error.text)
+      })
+    e.target.reset()
+  }
 
   return (
-    
-    <div className="contactus-container">
-    <h1>Thank you for your interest in having us build you a website with productivity in mind. We understand the importance of creating a website that is both efficient and effective. Our team of experienced web developers will work with you to create a website that meets your needs and exceeds your expectations. We will provide you with a comprehensive plan that outlines the scope of the project, timeline, budget, and any other requirements. We look forward to working with you to create a website that is tailored to your specific needs and goals. Please contact us if you have any questions or would like to discuss further details.</h1>
-    <form className="main" onSubmit={handleSubmit}>
-      <label className="label">Contact Us</label>
-      <Input placeholder="First Name" className="input"
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
+
+    <div className='contactBody'>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
       />
 
-      
-      <Input placeholder="Last Name" className="input"
-        type="text"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-      />
 
-      
-      <Input placeholder="Email" className="input"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      
-      <Input placeholder="Message" className="input" rows="10" cols="50" value={message} onChange={(e) => setMessage(e.target.value)} />
-
-      <Button  className="button" type="submit">Send Email</Button>
-    </form>
+      <div className="contact-container">
+        <div className="headerContainer">
+          <h1 className="title">Contact <span className='contact-header-name'>Us</span></h1>
+          <div>
+            <p className="titleParagraph">
+              We value your feedback and are committed to providing exceptional customer service.
+              Please use the form below to submit your inquiry, and our team will respond promptly.
+              We look forward to hearing from you.
+            </p>
+          </div>
+        </div>
+        <form className="form" onSubmit={sendEmail}>
+          <div className="form-group">
+            <input type="text" className='contactText' id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div className="form-group">
+            <input type="email" className='contactEmail' id="email" name="email" placeholder="Your email" required />
+          </div>
+          <div className="form-group">
+            <textarea id="message" name="message" placeholder="Your message" required />
+          </div>
+          <div className="form-group">
+            <input type="submit" value="Submit" className="submit-btn" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
