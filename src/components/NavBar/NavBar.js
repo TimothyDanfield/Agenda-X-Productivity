@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom'
 
 
 const NavBar = () => {
-  
+
   const navigate = useNavigate()
-  let user = localStorage.getItem('User')
+  let user = localStorage.getItem('Id')
   user = true
   const handleLogout = () => {
     localStorage.clear()

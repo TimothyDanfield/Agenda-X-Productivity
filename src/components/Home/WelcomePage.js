@@ -1,15 +1,16 @@
 import React from "react";
-import { useState } from "react";
+//import { useState } from "react";
 import { Link } from "react-router-dom";
 import './WelcomePage.css';
-import { Button, Input } from "antd";
+
+
 
 
 
 const WelcomePage = () => {
-  /*const user = JSON.parse(localStorage.getItem('User'))
-  const [username, setUsername] = useState('Vesper');*/
-
+ /* const userJson = localStorage.get('User');
+  const user = JSON.parse(userJson);
+  //[user, setUser] = useState(user);*/
 
   return (
     <div className="welcome">
@@ -17,6 +18,7 @@ const WelcomePage = () => {
     <h2 className="h2welcome">One stop for all needs rolled into one. Sign up or Login!</h2>
     </div>
   );
+  
 };
 
 export default WelcomePage;
