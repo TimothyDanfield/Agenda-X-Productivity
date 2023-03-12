@@ -1,8 +1,131 @@
 .welcomePage {
-    background-color: rgb(15, 135, 119);
-    Margin: 0;
+  background-color: rgb(15, 135, 119);
+  margin: 0;
+  text-align: center;
+  height: 100vh;
 }
 
-.workButton {
-    background-color: aqua;
+.welcomeNote {
+    padding-top: 50px;;
+  font-size: 30px;
+  font-family:Arial, Helvetica, sans-serif;
 }
+
+
+.workButton {
+  position: static;
+  background-color: rgb(39, 39, 105);
+  font-family:Arial, Helvetica, sans-serif;
+  Margin: 20px;
+  height: 40px;
+  width: 600px;
+  border-radius: 20px;
+}
+
+.socialButton {
+    position: static;
+    background-color: rgb(130, 39, 130);
+    font-family:Arial, Helvetica, sans-serif;
+    Margin: 20px;
+    height: 40px;
+    width: 600px;
+    border-radius: 20px;
+
+}
+.exerciseButton {
+    position: static;
+    background-color: rgb(181, 71, 71);
+    font-family:Arial, Helvetica, sans-serif;
+    Margin: 20px;
+    height: 40px;
+    width: 600px;  
+    border-radius: 20px;
+}
+
+.selfCareButton {
+    position: static;
+    background-color: magenta;
+    font-family:Arial, Helvetica, sans-serif;
+    Margin: 20px;
+    height: 40px;
+    width: 600px;
+    border-radius: 20px;
+}
+
+.vacationButton {
+    position: static;
+    background-color: rgb(251, 251, 87);
+    font-family:Arial, Helvetica, sans-serif;
+    Margin: 20px;
+    height: 40px;
+    width: 600px;
+    border-radius: 20px;
+}
+
+.personalizedButton {
+    position: static;
+    background-color: rgb(244, 124, 26);
+    font-family:Arial, Helvetica, sans-serif;
+    Margin: 20px;
+    height: 40px;
+    width: 600px;
+    border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  .workButton {
+  position: static;
+  background-color: rgb(39, 39, 105);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border: none;
+  color: white;
+  font-size: 20px center;
+  padding-left: 50px;
+  padding-right: 500px;
+  margin-left: 150px;
+  margin-right: 500px;
+  margin-top: 100px;;
+  height: 80px;
+  width: 50px;
+  width: 60px;
+}
+
+.socialButton {
+position: relative;
+  background-color: rgb(181, 71, 71);
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  border: none;
+  color: white;
+  font-size: 20px center;  
+  padding-left: 500px;
+  padding-right: 50px;
+  margin-left: 800px;
+  margin-right: 50px;
+  margin-top: 100px;
+  margin-bottom: 00px;
+  height: 80px;
+  width: 60px;
+  
+
+}
+  */

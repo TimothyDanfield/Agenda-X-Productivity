@@ -1,39 +1,62 @@
 import React from "react";
-import { useState } from "react";
+//import { useState } from "react";
 import { Link } from "react-router-dom";
 import './WelcomePage.css';
-import { Button, Input } from "antd";
+
+
 
 
 
 const WelcomePage = () => {
-  /*const user = JSON.parse(localStorage.getItem('User'))
-  const [username, setUsername] = useState('Vesper');*/
-
+ /* const userJson = localStorage.get('User');
+  const user = JSON.parse(userJson);
+  //[user, setUser] = useState(user);*/
 
   return (
     <div className="welcomePage">
-      <h2 className="welcomeNote">
-        Hello {username}! How can we help you be more productive today?
-      </h2>
+      <h1 className="welcomeNote">
+        Hello {""}! What's on your AgendaX today? How will you be more productive today?
+      </h1>
 
+    <div className = 'workDiv'>
       <Link to="/task">
-        <Button className = 'workButton'>Work</Button>
+        <button className = 'workButton'>Work</button>
       </Link>
-
+      </div>
+      
+      <div className = 'socialDiv'>
       <Link to="not made yet">
-        <button>Vacation</button>
+        <button className = "socialButton">Social</button>
       </Link>
+      </div>
 
+      <div className= 'exerciseDiv'>
+      <Link to="not made yet">
+        <button className = 'exerciseButton'>Exercise</button>
+      </Link>
+      </div>
+
+      <div className = 'selfCareDiv'>
       <Link to="/selfcare">
-        <button>SelfCare</button>
+        <button className = 'selfCareButton'>SelfCare</button>
       </Link>
+      </div>
 
+      <div className = 'vacationDiv'> 
       <Link to="not made yet">
-        <button>Social</button>
+        <button className = 'vacationButton'>Vacation</button>
       </Link>
+      </div>
+
+      <div className = 'personalizedDiv' > 
+      <Link to="not made yet">
+        <button className = 'personalizedButton'>Create Your Own Catagory</button>
+      </Link>
+      </div>
+    
     </div>
   );
+  
 };
 
 export default WelcomePage;
