@@ -15,13 +15,15 @@ const NavBar = () => {
   }
 
   return (
-    <div style={{ textDecoration:"none", textAlign: "center", backgroundColor: "black" }}>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/signup">
-        SignUp
-      </Link>
-      <Link style={{ textDecoration:"none", color: "white", padding: "10px" }} to="/login">
-        Login
-      </Link>
+    <div>
+      {user ?
+        <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/signup">
+            SignUp
+          </Link>
+          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/login">
+            Login
+          </Link>
 
           <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/task">
             Work

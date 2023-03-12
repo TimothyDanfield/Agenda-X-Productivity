@@ -7,8 +7,8 @@ import { Button, Input } from "antd";
 
 
 const WelcomePage = () => {
-  const user = JSON.parse(localStorage.getItem('User'))
-  const [username, setUsername] = useState('Vesper');
+  /*const user = JSON.parse(localStorage.getItem('User'))
+  const [username, setUsername] = useState('Vesper');*/
 
 
   return (
