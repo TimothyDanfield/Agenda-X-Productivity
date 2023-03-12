@@ -7,7 +7,7 @@ import LoginPage from './components/User/LoginPage'
 import WelcomePage from './components/Home/WelcomePage'
 import AboutUs from './components/AboutUs/AboutUs'
 import ContactUs from './components/ContactUs/ContactUs'
-import SelfCare from './components/SelfCare/SelfCare'
+
 import SignUp from './components/SignUp/SignUp'
 import ProfilePage from './components/Profile/ProfilePage'
 import PrivateRoutes from './utils/PrivateRoutes'
@@ -28,7 +28,7 @@ const App = () => {
           <Route exact path="/task" element={<Task />} />
           <Route exact path="/aboutus" element={<AboutUs />} />
           <Route exact path="/contact" element={<ContactUs />} />
-          <Route exact path="/selfcare" element={<SelfCare />} />
+          
           <Route exact path='/profile' element={<ProfilePage />} />
           <Route exact path='/notes' element={<Notes />} />
         </Route>

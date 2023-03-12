@@ -12,26 +12,9 @@ const WelcomePage = () => {
 
 
   return (
-    <div className="welcomePage">
-      <h2 className="welcomeNote">
-        Hello {username}! How can we help you be more productive today?
-      </h2>
-
-      <Link to="/task">
-        <Button className = 'workButton'>Work</Button>
-      </Link>
-
-      <Link to="not made yet">
-        <button>Vacation</button>
-      </Link>
-
-      <Link to="/selfcare">
-        <button>SelfCare</button>
-      </Link>
-
-      <Link to="not made yet">
-        <button>Social</button>
-      </Link>
+    <div className="welcome">
+    <h1 className="h1welcome">Welcome to The Live Wires</h1>
+    <h2 className="h2welcome">One stop for all needs rolled into one. Sign up or Login!</h2>
     </div>
   );
 };

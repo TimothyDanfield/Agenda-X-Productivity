@@ -15,11 +15,11 @@ h1 {
   text-align: center;
 }
 
-.main {
+.mainlogin {
   width: 50%;
   background: red;
   overflow: hidden;
-  background: url("/public/signup.jpeg") no-repeat center/cover;
+  background: url("/public/livewires-logo.png") no-repeat center/cover;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
   margin-left: auto;
