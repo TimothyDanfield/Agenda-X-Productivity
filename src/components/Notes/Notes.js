@@ -5,19 +5,18 @@ import axios from '../../utils/axiosConfig'
 import './Notes.css';
 
 const Notes = () => {
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState([])
     const [user, setUser] = useState('')
     const [refresh, setRefresh] = useState('')
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [notesError, setNotesError] = useState('')
+    const [title, setTitle] = useState('')
+    const [content, setContent] = useState('')
 
-    const email = JSON.parse(localStorage.getItem('User')) ? JSON.parse(localStorage.getItem('User')).email : ''
+    const _id = JSON.parse(localStorage.getItem('Id'))
 
     useEffect(() => {
         const getUser = async () => {
             try {
-                const userObj = await axios.get(`/api/user?email=${email}`)
+                const userObj = await axios.get(`/api/user?_id=${_id}`)
                 setUser(userObj.data)
                 setNotes(userObj.data.notes)
             } catch (error) {
@@ -29,13 +28,18 @@ const Notes = () => {
 
     
     const handleSubmit = async (event) => {
-        const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&email=${email}`)
+        event.preventDefault()
+        const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${_id}`)
+        setRefresh(!refresh)
+        setTitle('')
+        setContent('')
+        toast.success('Note created')
     };
 
     const handleDelete = async (note) => {
         const email = user.email
-        const _id = note._id
-        const deletedNote = await axios.delete(`/api/note?email=${email}&&_id=${_id}`)
+        const noteid = note._id
+        const deletedNote = await axios.delete(`/api/note?_id=${_id}&&noteid=${noteid}`)
         setRefresh(!refresh)
         toast.success('Note deleted')
     }

@@ -12,6 +12,7 @@ import SignUp from './components/SignUp/SignUp'
 import ProfilePage from './components/Profile/ProfilePage'
 import PrivateRoutes from './utils/PrivateRoutes'
 import Notes from './components/Notes/Notes'
+import ForgotPassword from './components/ForgotPassword/ForgotPassword'
 const App = () => {
 
   const user = localStorage.getItem('user')
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/" element={<WelcomePage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path='forgotpassword' element={<ForgotPassword />} />
         <Route element={<PrivateRoutes />}>
           <Route exact path="/task" element={<Task />} />
           <Route exact path="/aboutus" element={<AboutUs />} />

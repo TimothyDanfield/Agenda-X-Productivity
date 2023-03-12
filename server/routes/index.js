@@ -18,9 +18,15 @@ router.get('/', auth, (req, res, next) => {
 router
     .route('/user')
     .get(async (req, res, next) => {
-        const { _id } = req.query
-        const user = await User.findById(_id).populate('tasks').populate('notes')
-        return res.status(200).send(user)
+        const { _id, email } = req.query
+        if (_id) {
+            const user = await User.findById(_id).populate('tasks').populate('notes')
+            return res.status(200).send(user)
+        } else {
+            const user = await User.findOne({ email: email })
+            return res.status(200).send(user)
+        }
+
     })
     .post(async (req, res, next) => {
         const { name, email, password } = req.body
@@ -31,7 +37,6 @@ router
     .put(async (req, res, next) => {
         const { name, email, currentPassword, newPassword, _id } = req.query
         const userConfirm = await User.findById({ _id })
-        console.log(userConfirm)
         let encryptedPassword = await bcrypt.hash(newPassword, 10)
         if (userConfirm && (await bcrypt.compare(currentPassword, userConfirm.password))) {
             const token = jwt.sign(
@@ -65,6 +70,25 @@ router
         }
     })
 
+    //Forgot password route
+router.put('/user/forgotPassword', async (req, res, next) => {
+    const { email, newPassword, securityAnswer } = req.query
+    if(!(newPassword || securityAnswer)) {
+        return res.status(400).send({ Error: "Please fill out all fields"})
+    }
+    const userConfirm = await User.findOne({ email: email })
+    let encryptedPassword = await bcrypt.hash(newPassword, 10)
+    if(userConfirm && (userConfirm.securityAnswer.toLowerCase() === securityAnswer.toLowerCase())){
+        const user = await User.findByIdAndUpdate(userConfirm._id, {
+            password: encryptedPassword
+        })
+        user.save()
+        res.status(200).send(user)
+    } else {
+        res.status(401).send({ Error: "Incorrect Security Answer"})
+    }
+})
+
 
 // Task endpoints 
 router
@@ -95,17 +119,17 @@ router
         }
     })
     .delete(async (req, res, next) => {
-        const { _id, email } = req.body
-        const author = await User.findOne({ email: email })
-        const deletedTask = await Task.findOneAndDelete({ _id })
+        const { _id, taskid } = req.query
+        const author = await User.findById({ _id })
+        const deletedTask = await Task.findOneAndDelete({ _id: taskid })
         try {
-            const userUpdate = await User.updateOne(
-                { email: author.email },
-                { $pull: { tasks: _id } }
+            const userUpdate = await User.findByIdAndUpdate(
+                { _id: author._id },
+                { $pull: { tasks: taskid } }
             )
-            res.status(200).send(deletedTask, userUpdate)
+            res.status(200).send(userUpdate)
         } catch (error) {
-            console.log(error.errors)
+            console.log(error)
         }
     })
 
@@ -148,7 +172,7 @@ router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.query
         if (!(email && password)) {
-            return res.status(400).json({ error: "Please fill out all fields"})
+            return res.status(400).json({ error: "Please fill out all fields" })
         }
         const user = await User.findOne({ email }).populate('tasks').populate('notes')
 
@@ -174,15 +198,15 @@ router.post('/login', async (req, res, next) => {
 router
     .route('/note')
     .get(async (req, res, next) => {
-        const { email } = req.body
-        const user = await User.findOne({ email: email })
+        const { _id } = req.body
+        const user = await User.findById({ _id })
         const note = await Note.find({ author: user._id })
         console.log(note)
         res.status(200).send(note)
     })
     .post(async (req, res, next) => {
-        const { title, content, email } = req.query
-        const author = await User.findOne({ email: email })
+        const { title, content, _id } = req.query
+        const author = await User.findById({ _id })
         const newNote = new Note({
             title,
             author: author._id,
@@ -199,15 +223,13 @@ router
         }
     })
     .delete(async (req, res, next) => {
-        const { _id, email } = req.query
-        console.log(email)
-        console.log(_id)
-        const author = await User.findOne({ email: email })
-        const deletedNote = await Note.findOneAndDelete({ _id })
+        const { noteid, _id } = req.query
+        const author = await User.findById({ _id })
+        const deletedNote = await Note.findOneAndDelete({ _id: noteid })
         try {
-            const userUpdate = await User.updateOne(
-                { email: author.email },
-                { $pull: { notes: _id } }
+            const userUpdate = await User.findByIdAndUpdate(
+                { _id: author._id },
+                { $pull: { notes: noteid } }
             )
             res.status(200).send(author)
         } catch (error) {
