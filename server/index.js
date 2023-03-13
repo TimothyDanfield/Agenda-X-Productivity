@@ -1,8 +1,10 @@
+const dotenv = require('dotenv').config()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const express = require('express')
 const router = require('./routes')
 const keys = require('./config/keys')
+
 
 
 mongoose.connect(keys.database.url, {
