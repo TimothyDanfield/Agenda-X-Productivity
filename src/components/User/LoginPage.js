@@ -62,7 +62,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <div className="main">
+      <div className="mainlogin">
         <form className='loginForm'>
           <label className="label">Login</label>
           <Input className="input" placeholder="Email" style={{ width: "200px" }} onChange={handleEmailChange} />
