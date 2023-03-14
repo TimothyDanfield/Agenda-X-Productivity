@@ -1,58 +1,64 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "./musicplayer.css";
+import React from "react";
+import Howler from "howler";
 
-// const MusicPlayer = () => {
-//   const [musicData, setMusicData] = useState([]);
+class MusicPlayer extends React.Component {
+  constructor(props) {
+    super(props);
 
-//   useEffect(() => {
-//     axios
-//       .get("https://example.com/api/music-library")
-//       .then((res) => setMusicData(res.data))
-//       .catch((err) => console.log(err));
-//   }, []);
+    this.state = {
+      playing: false,
+      song: null,
+    };
 
-//   const searchMusic = (e) => {
-//     e.preventDefault();
+    this.play = this.play.bind(this);
+    this.stop = this.stop.bind(this);
+  }
 
-//     const searchTerm = e.target.searchTerm.value;
+  componentDidMount() {
+    const song = new Howler({
+      src: [this.props.song], 
+      loop: true, 
+      volume: 0.5, 
+    });
 
-//     axios
-//       .get("https://example.com/api/music-library", { params: { searchTerm } })
-//       .then((res) => setMusicData(res.data))
-//       .catch((err) => console.log(err));
-//   };
+    this.setState({ song }); 
+  }
 
-//   const playPauseHandler = (e) => {
-//     if (e.target.className === "play") {
-//       e.target.className = "pause";
-//     } else if (e.target.className === "pause") {
-//       e.target.className = "play";
-//     }
-//   };
+  play() {
+   
+    const { playing, song } = this.state;
 
-//   return (
-//     <div>
-//       <form onSubmit={searchMusic}>
-//         <input type="text" name="searchTerm" />
-//         <button type="submit">Search</button>
-//       </form>
+    if (!playing) {
+      
+      song.play(); 
 
-//       <ul>
-//         {musicData &&
-//           musicData.map((track, index) => (
-//             <li key={index}>
-//               <div className="track-info">
-//                 <h3>{track["title"]}</h3>
+      this.setState({ playing: true }); 
+    } else {
+      
+      song.pause(); 
 
-//                 <p>{track["artist"]}</p>
-//               </div>
+      this.setState({ playing: false }); 
+    }
+  }
 
-//               <button className="play" onClick={playPauseHandler}></button>
-//             </li>
-//           ))}
-//       </ul>
-//     </div>
-//   );
-// };
-// export default MusicPlayer;
+  stop() {
+    
+    const { song } = this.state;
+
+    if (song) {
+      song.stop();
+
+      this.setState({ playing: false });
+    }
+  }
+
+  render() {
+    return (
+      <div className="music-player">
+        <button onClick={this.play}>Play/Pause</button>
+        <button onClick={this.stop}>Stop</button>
+      </div>
+    );
+  }
+}
+export default MusicPlayer;
