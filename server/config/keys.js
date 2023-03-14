@@ -4,10 +4,10 @@ module.exports = {
       apiEndpoint: process.env.API_URL ? `/${process.env.API_URL}` : "/api",
     },
     database: {
-      url: process.env.MONGODB_URI || "mongodb+srv://nathanielgrandinette:somepassword1234@cluster0.u1htjf0.mongodb.net/Agenda-X-Productivity?retryWrites=true",
+      url: process.env.MONGODB_URI
     },
     jwt: {
-      secret: process.env.JWT_SECRET || "fjfkdjsoaijeo238u92jkrjeekjwl",
+      secret: process.env.JWT_SECRET,
       tokenLife: "7d",
     },
   }
