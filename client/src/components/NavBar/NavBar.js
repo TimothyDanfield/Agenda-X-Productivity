@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
+import './navbar.css'
 
 
 
@@ -15,41 +16,48 @@ const NavBar = () => {
   }
 
   return (
-    <div>
+    <div className="navbar">
       {user ?
         <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
           
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/login">
+          <Link  to="/home">
+            Home
+          </Link>
+          <Link to="/login">
             Login
           </Link>
+          <Link to="/musicplayer">
+            Music
+          </Link>
 
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/task">
+          <Link to="/task">
             Work
           </Link>
 
           
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/aboutus">
+          <Link to="/aboutus">
             About Us
           </Link>
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/contact">
+          <Link  to="/contact">
             Contact Us
           </Link>
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/profile">
+          <Link to="/profile">
             Profile
           </Link>
+          {/* <video  autoPlay loop   src="people.mp4"></video> */}
 
           <button onClick={handleLogout}>Logout</button>
         </div> :
-        <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
+        <div className="navbar">
          
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/login">
+          <Link  to="/login">
             Login
           </Link>
 
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/aboutus">
+          <Link  to="/aboutus">
             About Us
           </Link>
-          <Link style={{ textDecoration: "none", color: "white", padding: "10px" }} to="/contact">
+          <Link  to="/contact">
             Contact Us
           </Link>
         </div>}
