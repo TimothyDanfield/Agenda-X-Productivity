@@ -1,0 +1,12 @@
+.calendarForm {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.calendar {
+    min-width: 80%;
+    max-width: 90%;
+    margin: 0 auto;
+}
