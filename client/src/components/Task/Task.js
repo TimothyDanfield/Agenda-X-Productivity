@@ -15,7 +15,6 @@ import './task.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import toast, { Toaster } from 'react-hot-toast'
-const { Option } = Select;
 
 const locales = {
   "en-US": require("date-fns/locale/en-US")
@@ -44,6 +43,8 @@ const Task = () => {
     start: '',
     end: '',
     category: 'Work',
+    location: '',
+    description: '',
     startTime: '',
     endTime: ''
   })
@@ -53,19 +54,50 @@ const Task = () => {
   const _id = JSON.parse(localStorage.getItem('Id'))
 
   useEffect(() => {
+    setRefresh(!refresh)
+  }, [])
+
+  useEffect(() => {
     const getUser = async () => {
       const userObj = await axios.get(`/api/user?_id=${_id}`)
       setUser(userObj.data)
       setTasksOnCalendar(userObj.data.tasks)
-
     }
     getUser()
   }, [refresh])
-  console.log(newEvent)
-  const handleClose = () => {
-    setOpenEvent(false)
-    setOpenSlot(false)
+
+  const eventPropGetter = (event) => {
+    let backgroundColor
+    if (event.category === 'Personal') {
+      backgroundColor = '#b1d199' //green
+    }
+    if (event.category === 'Work') {
+      backgroundColor = '#aa9aff' //purple
+    }
+    if (event.category === 'School') {
+      backgroundColor = '#f8aa4d' //orange
+    } 
+    if (event.category === 'Appointment') {
+      backgroundColor = '#ff7561' //red 
+    } 
+    if (event.category === 'Other') {
+      backgroundColor = '#63b4ff' //blue
+    }
+    
+    return { style: { backgroundColor } }
   }
+
+  const events = tasksOnCalendar.map((task) => {
+    return {
+      title: task.title,
+      start: new Date(task.start),
+      end: new Date(task.end),
+      category: task.category,
+      location: task.location,
+      description: task.description,
+      _id: task._id
+    }
+  })
 
   const handleAddEvent = async () => {
     const task = await axios.post('/api/task', {
@@ -73,6 +105,8 @@ const Task = () => {
       start: newEvent.start,
       end: newEvent.end,
       category: newEvent.category,
+      location: newEvent.location,
+      description: newEvent.description,
       _id
     })
     handleClose()
@@ -86,6 +120,8 @@ const Task = () => {
       start: newEvent.start ? newEvent.start : selectedEvent.start,
       end: newEvent.end ? newEvent.end : selectedEvent.end,
       category: newEvent.category ? newEvent.category : selectedEvent.category,
+      location: newEvent.location ? newEvent.location : selectedEvent.location,
+      description: newEvent.description ? newEvent.description : selectedEvent.description,
       _id: selectedEvent._id
     })
     handleClose()
@@ -93,47 +129,15 @@ const Task = () => {
     toast.success("Event Updated")
   }
 
-  const eventPropGetter = (event) => {
-    let backgroundColor
-    if (event.category === 'Personal') {
-      backgroundColor = 'green'
-    }
-    if (event.category === 'Work') {
-      backgroundColor = 'blue'
-    }
-
-    return { style: { backgroundColor } }
-  }
-
-  const events = tasksOnCalendar.map((task) => {
-    return {
-      title: task.title,
-      start: new Date(task.start),
-      end: new Date(task.end),
-      category: task.category,
-      _id: task._id
-    }
-  })
-
-  const handleDragEvent = async ({ event, start, end }) => {
+  const handleChangeEvent = async ({ event, start, end }) => {
     const updatedEvent = { ...event, start: start, end: end, _id: event._id }
     const changeEvent = await axios.put('/api/task', {
       title: event.title,
       start: start,
       end: end,
       category: event.category,
-      _id: event._id
-    })
-    setRefresh(!refresh)
-  }
-
-  const handleResize = async ({ event, start, end }) => {
-    const updatedEvent = { ...event, start: start, end: end, _id: event._id }
-    const changeEvent = await axios.put('/api/task', {
-      title: event.title,
-      start: start,
-      end, end,
-      category: event.category,
+      location: event.location,
+      description: event.description,
       _id: event._id
     })
     setRefresh(!refresh)
@@ -147,15 +151,20 @@ const Task = () => {
       end: event.end,
       title: event.title,
       category: event.category,
+      description: event.description,
+      location: event.location,
     })
     setOpenEvent(true)
   }
 
   const handleSlotSelected = (slotInfo) => {
-    setNewEvent({...newEvent,
+    setNewEvent({
+      ...newEvent,
       title: '',
-      start: '',
+      start: slotInfo.start,
       end: '',
+      location: '',
+      description: '',
     })
     setOpenSlot(true)
   }
@@ -165,6 +174,12 @@ const Task = () => {
     handleClose()
     setRefresh(!refresh)
     toast.success('Note deleted')
+  }
+
+
+  const handleClose = () => {
+    setOpenEvent(false)
+    setOpenSlot(false)
   }
 
   return (
@@ -184,8 +199,8 @@ const Task = () => {
           onSelectSlot={(slotInfo) => handleSlotSelected(slotInfo)}
           step={15}
 
-          onEventResize={({ event, start, end }) => handleResize({ event, start, end })}
-          onEventDrop={({ event, start, end }) => handleDragEvent({ event, start, end })}
+          onEventResize={({ event, start, end }) => handleChangeEvent({ event, start, end })}
+          onEventDrop={({ event, start, end }) => handleChangeEvent({ event, start, end })}
         />
       </div>
 
@@ -201,37 +216,55 @@ const Task = () => {
             onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
             placeholder="Enter Task Name"
           />
-          <br />
+          <br/>
+          <Input
+            style={{ width: "200px", height: '30px', marginBottom: '10px' }}
+            value={newEvent.location}
+            onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+            placeholder="Location"
+          />
           <select
             value={newEvent.category}
             placeholder="Select a category"
             onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-            style={{ width: "200px", borderRadius: '5px', borderColor: 'lightgray', height: '30px', marginBottom: '10px' }}
+            style={{ marginLeft: '10px', width: "200px", borderRadius: '5px', borderColor: 'lightgray', height: '30px', marginBottom: '10px' }}
           >
             <option value="Work">Work</option>
             <option value="Personal">Personal</option>
+            <option value="Appointment">Appointment</option>
+            <option value="School">School</option>
+            <option value="Other">Other</option>
           </select>
 
           <Space direction="vertical" size={12}>
             <RangePicker
               showTime={{
-                format: 'HH:mm',
+                format: 'hh:mm A',
               }}
-              format="YYYY-MM-DD HH:mm"
+              style={{ marginBottom: '10px' }}
+              placeholder={[newEvent.start, newEvent.end]}
+              format="YYYY-MM-DD hh:mm A"
               onOk={(value) => setNewEvent({ ...newEvent, start: value[0].format(), end: value[1].format() })}
             />
           </Space>
+          <br/>
+          <Input.TextArea
+            style={{ width: "500px", height: '90px', marginBottom: '10px' }}
+            value={newEvent.description}
+            onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+            placeholder="Description"
+          />
         </DialogContent>
         <DialogActions>
-        <Button type="primary" onClick={handleDelete} style={{ marginLeft: '10px', backgroundColor: 'red' }}>
-          Delete
-        </Button>
-        <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
-          Cancel
-        </Button>
-        <Button type="primary" onClick={(selectedEvent) => handleUpdateEvent(selectedEvent)} style={{ marginLeft: '10px' }}>
-          Update Task
-        </Button>
+          <Button type="primary" onClick={handleDelete} style={{ marginLeft: '10px', backgroundColor: 'red' }}>
+            Delete
+          </Button>
+          <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
+            Cancel
+          </Button>
+          <Button type="primary" onClick={(selectedEvent) => handleUpdateEvent(selectedEvent)} style={{ marginLeft: '10px' }}>
+            Update Task
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -245,36 +278,54 @@ const Task = () => {
             style={{ width: "200px", height: '30px', marginBottom: '10px' }}
             value={newEvent.title}
             onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-            placeholder="Enter Task Name"
+            placeholder="Title"
           />
-          <br />
+          <br/>
+          <Input
+            style={{ width: "200px", height: '30px', marginBottom: '10px' }}
+            value={newEvent.location}
+            onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+            placeholder="Location"
+          />
           <select
             value={newEvent.category}
             placeholder="Select a category"
             onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-            style={{ width: "200px", borderRadius: '5px', borderColor: 'lightgray', height: '30px', marginBottom: '10px' }}
+            style={{ marginLeft: '10px', width: "200px", borderRadius: '5px', borderColor: 'lightgray', height: '30px', marginBottom: '10px' }}
           >
-            <option value="Work">Work</option>
-            <option value="Personal">Personal</option>
+            <option value={"Work"}>Work</option>
+            <option value={"Personal"}>Personal</option>
+            <option value={"Appointment"}>Appointment</option>
+            <option value={"School"}>School</option>
+            <option value={"Other"}>Other</option>
           </select>
-
+          
           <Space direction="vertical" size={12}>
             <RangePicker
               showTime={{
-                format: 'HH:mm',
+                format: 'hh:mm A',
               }}
-              format="YYYY-MM-DD HH:mm"
+              style={{ marginBottom: '10px' }}
+              format="YYYY-MM-DD hh:mm A"
+              placeholder={[newEvent.start, newEvent.end]}
               onOk={(value) => setNewEvent({ ...newEvent, start: value[0].format(), end: value[1].format() })}
             />
           </Space>
+          <br/>
+          <Input.TextArea
+            style={{ width: "500px", height: '90px', marginBottom: '10px' }}
+            value={newEvent.description}
+            onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+            placeholder="Description"
+          />
         </DialogContent>
         <DialogActions>
-        <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
-          Cancel
-        </Button>
-        <Button type="primary" onClick={handleAddEvent} style={{ marginLeft: '10px' }}>
-          Create Task
-        </Button>
+          <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
+            Cancel
+          </Button>
+          <Button type="primary" onClick={handleAddEvent} style={{ marginLeft: '10px' }}>
+            Create Task
+          </Button>
         </DialogActions>
       </Dialog>
       <Toaster />

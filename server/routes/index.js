@@ -17,7 +17,7 @@ router.get('/', auth, (req, res, next) => {
 // User endpoints
 router
     .route('/user')
-    .get(async (req, res, next) => {
+    .get(auth, async (req, res, next) => {
         const { _id, email } = req.query
         if (_id) {
             const user = await User.findById(_id).populate('tasks').populate('notes')
@@ -28,13 +28,13 @@ router
         }
 
     })
-    .post(async (req, res, next) => {
+    .post(auth, async (req, res, next) => {
         const { name, email, password } = req.body
         const newUser = new User({ name, email, password, tasks: [] })
         const user = await newUser.save()
         res.status(200).send(user)
     })
-    .put(async (req, res, next) => {
+    .put(auth, async (req, res, next) => {
         const { name, email, currentPassword, newPassword, _id } = req.query
         const userConfirm = await User.findById({ _id })
         let encryptedPassword = await bcrypt.hash(newPassword, 10)
@@ -59,7 +59,7 @@ router
             res.status(401).send({ error: "Incorrect Password" })
         }
     })
-    .delete(async (req, res, next) => {
+    .delete(auth, async (req, res, next) => {
         const { _id, password } = req.body
         const user = await User.findById({ _id })
         if (user && (await bcrypt.compare(password, user.password))) {
@@ -93,21 +93,23 @@ router.put('/user/forgotPassword', async (req, res, next) => {
 // Task endpoints 
 router
     .route('/task')
-    .get(async (req, res, next) => {
+    .get(auth, async (req, res, next) => {
         const { email } = req.query
         const user = await User.findOne({ email: email })
         const task = await Task.find({ author: user._id })
         res.status(200).send(task)
     })
-    .post(async (req, res, next) => {
-        const { title, start, end, category, _id } = req.body
+    .post(auth, async (req, res, next) => {
+        const { title, start, end, category, _id, location, description } = req.body
         const author = await User.findById(_id)
         const newTask = new Task({
             title,
             author: author._id,
             start,
             end,
-            category
+            category,
+            location,
+            description
         })
         try {
             const task = await newTask.save()
@@ -119,17 +121,19 @@ router
             res.status(404).json({ error: "No author" })
         }
     }) 
-    .put(async (req, res, next) => {
-        const { title, start, end, category, _id } = req.body
+    .put(auth, async (req, res, next) => {
+        const { title, start, end, category, _id, location, description } = req.body
         const updateTask = await Task.findByIdAndUpdate(_id, {
             title: title,
             start: start,
             end: end,
-            category: category
+            category: category,
+            location: location,
+            description: description
         })
         res.status(200).send(updateTask)
     })
-    .delete(async (req, res, next) => {
+    .delete(auth, async (req, res, next) => {
         const { _id, taskid } = req.query
         const author = await User.findById({ _id })
         const deletedTask = await Task.findOneAndDelete({ _id: taskid })
@@ -208,14 +212,14 @@ router.post('/login', async (req, res, next) => {
 
 router
     .route('/note')
-    .get(async (req, res, next) => {
+    .get(auth, async (req, res, next) => {
         const { _id } = req.body
         const user = await User.findById({ _id })
         const note = await Note.find({ author: user._id })
         console.log(note)
         res.status(200).send(note)
     })
-    .post(async (req, res, next) => {
+    .post(auth, async (req, res, next) => {
         const { title, content, _id } = req.query
         const author = await User.findById({ _id })
         const newNote = new Note({
@@ -233,7 +237,7 @@ router
             res.status(404).json({ error: "No author" })
         }
     })
-    .delete(async (req, res, next) => {
+    .delete(auth, async (req, res, next) => {
         const { noteid, _id } = req.query
         const author = await User.findById({ _id })
         const deletedNote = await Note.findOneAndDelete({ _id: noteid })

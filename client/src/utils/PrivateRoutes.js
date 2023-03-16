@@ -7,8 +7,8 @@ const PrivateRoutes = () => {
         const token = JSON.parse(localStorage.getItem('Token'))
         return token ? token : ''
     }
-    //let auth = { 'token': getToken() } 
-    let auth = { token: true}
+    let auth = { 'token': getToken() } 
+    //let auth = { token: true}
 
     return (
         auth.token ? <Outlet /> : <Navigate to='/login' />

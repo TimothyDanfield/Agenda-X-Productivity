@@ -9,7 +9,6 @@ const NavBar = () => {
 
   const navigate = useNavigate()
   let user = localStorage.getItem('Id')
-  user = true
   const handleLogout = () => {
     localStorage.clear()
     navigate('/login')
@@ -18,23 +17,20 @@ const NavBar = () => {
   return (
     <div className="navbar">
       {user ?
-        <div style={{ padding: "20px", textDecoration: "none", textAlign: "center", backgroundColor: "black" }}>
+        <div>
           
           <Link  to="/home">
             Home
           </Link>
-          <Link to="/login">
-            Login
-          </Link>
           <Link to="/musicplayer">
             Music
           </Link>
-
           <Link to="/task">
             Work
           </Link>
-
-          
+          <Link to="/notes">
+            Notes
+          </Link>
           <Link to="/aboutus">
             About Us
           </Link>
@@ -48,12 +44,14 @@ const NavBar = () => {
 
           <button onClick={handleLogout}>Logout</button>
         </div> :
-        <div className="navbar">
+        <div>
          
           <Link  to="/login">
             Login
           </Link>
-
+          <Link  to="/signup">
+            Sign Up
+          </Link>
           <Link  to="/aboutus">
             About Us
           </Link>

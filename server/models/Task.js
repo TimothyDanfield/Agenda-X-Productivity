@@ -21,6 +21,14 @@ const taskSchema = new mongoose.Schema({
     end: {
         type: Date,
         required: true
+    },
+    location: {
+        type: String,
+        required: false,
+    },
+    description: {
+        type: String,
+        required: false,
     }
 }, { timestamps: true })
 
