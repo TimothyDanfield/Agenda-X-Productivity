@@ -1,9 +1,9 @@
 .profileBody {
-    height: 85vh;
-    margin: 0;
-    padding-top: 5%;
+    height: 90vh;
+    margin-top: 2%;
+    padding: 0;
     font-family: sans-serif;
-    background: linear-gradient(to top, #0f0c29, #302b63, #24243e);
+    background: url("/public/livewires-logo.png") no-repeat center/cover;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -14,10 +14,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 60%;
     width: 40%;
     margin: 1%;
     max-width: 600px;
-    background-color: #FFFFFF;
+    background-color: transparent;
     padding: 40px;
     border-radius: 10px;
     color: #333333;
@@ -55,7 +56,7 @@ label {
     border: none;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #F2E6FF;
+    background-color: #dff0fd;
     color: #333333;
 }
 
@@ -86,34 +87,42 @@ input:focus {
     width: 40%;
     margin: 1%;
     max-width: 600px;
-    background-color: #FFFFFF;
+    background-color: transparent;
     padding: 40px;
     border-radius: 10px;
     color: #333333;
-    height: 76%;
+    height: 60%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .profileTask {
     border: 1px solid black;
-    margin-bottom: 10px;
-    background-color: #F2E6FF;
-    min-height: 5vh;
+    margin-bottom: 20px;
+    height: fit-content;
     border-radius: 5px;
     font-size: 20px;
     padding: 15px;
     width: 95%;
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #F2E6FF;
+    background-color: #dff0fd;
     color: #333333;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+.pTasks {
+    font-size: 15px;
+}
+
 .profileTask:hover {
     outline: none;
     box-shadow: 0px 2px 4px rgba(107, 72, 255, 0.4);
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background-color: transparent;
 }

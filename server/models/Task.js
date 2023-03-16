@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema.Types
 
 const taskSchema = new mongoose.Schema({
-    taskName: {
+    title: {
         type: String,
         required: true,
     },
@@ -12,11 +12,15 @@ const taskSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: false,
+        required: true,
     },
-    reminderTime: {
-        type: String,
-        required: false,
+    start: {
+        type: Date,
+        required: true,
+    },
+    end: {
+        type: Date,
+        required: true
     }
 }, { timestamps: true })
 

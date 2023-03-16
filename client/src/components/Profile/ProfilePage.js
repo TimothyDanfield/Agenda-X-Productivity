@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Image } from 'semantic-ui-react';
+import moment from 'moment'
 import { FaRegTimesCircle, FaPen } from 'react-icons/fa'
 import './profilepage.css'
 import toast, { Toaster } from 'react-hot-toast'
@@ -53,17 +54,20 @@ const ProfilePage = () => {
       <div className='taskContainer'>
         <h1>Tasks:</h1>
         {user && user.tasks.map((task, index) => {
+          let startDate = new Date(task.start).toString()
+          let endDate = new Date(task.end).toString()
+          let convertedStartDate = moment(startDate).format("MM-DD-YYYY")
+          let convertedEndDate = moment(endDate).format("MM-DD-YYYY")
           return (
             <div key={index}>
               <div className='profileTask'>
                 <div>
-                  <h5 style={{ margin: '0' }}>Task: {task.taskName}</h5>
-                  <p>Category: {task.category}</p>
+                  <h5 style={{ margin: '0' }}>Task: {task.title}</h5>
+                  <p className='pTasks'>Task Category: {task.category}</p>
+                  <p className='pTasks'>Date(s): {convertedStartDate} - {convertedEndDate}</p>
                 </div>
                 <div>
                   <FaRegTimesCircle className='delete' onClick={() => handleDelete(task)} />
-                  <p>Reminder Time:</p>
-                  <p>{task.reminderTime}</p>
                 </div>
               </div>
             </div>

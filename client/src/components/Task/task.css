@@ -10,3 +10,17 @@
     max-width: 90%;
     margin: 0 auto;
 }
+
+.rbc-month-view {
+    cursor: pointer;
+}
+
+.ant-picker-dropdown {
+    z-index: 9999 !important;
+}
+
+.rbc-header {
+    font-family: Brush Script MT, cursive;
+    background-color: black;
+    color: white;
+}

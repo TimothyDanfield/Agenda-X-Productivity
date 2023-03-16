@@ -100,12 +100,13 @@ router
         res.status(200).send(task)
     })
     .post(async (req, res, next) => {
-        const { taskName, category, reminderTime, email } = req.body
-        const author = await User.findOne({ email: email })
+        const { title, start, end, category, _id } = req.body
+        const author = await User.findById(_id)
         const newTask = new Task({
-            taskName,
+            title,
             author: author._id,
-            reminderTime,
+            start,
+            end,
             category
         })
         try {
@@ -117,6 +118,16 @@ router
             console.log(error)
             res.status(404).json({ error: "No author" })
         }
+    }) 
+    .put(async (req, res, next) => {
+        const { title, start, end, category, _id } = req.body
+        const updateTask = await Task.findByIdAndUpdate(_id, {
+            title: title,
+            start: start,
+            end: end,
+            category: category
+        })
+        res.status(200).send(updateTask)
     })
     .delete(async (req, res, next) => {
         const { _id, taskid } = req.query
@@ -131,7 +142,7 @@ router
         } catch (error) {
             console.log(error)
         }
-    })
+    }) 
 
 // Register endpoints
 router.post('/register', async (req, res, next) => {
