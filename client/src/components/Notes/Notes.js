@@ -4,12 +4,17 @@ import toast, { Toaster } from 'react-hot-toast'
 import axios from '../../utils/axiosConfig'
 import './Notes.css';
 
+
 const Notes = () => {
     const [notes, setNotes] = useState([])
     const [user, setUser] = useState('')
     const [refresh, setRefresh] = useState('')
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [newNote, setNewNote] = useState({
+        title: '',
+        content: ''
+    })
 
     const _id = JSON.parse(localStorage.getItem('Id'))
 
@@ -26,7 +31,9 @@ const Notes = () => {
         getUser()
     }, [refresh])
 
-    
+
+
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${_id}`)
@@ -44,10 +51,20 @@ const Notes = () => {
         toast.success('Note deleted')
     }
 
-    const handleEdit = async (note) => {
-
+    const handleNoteSelected = (note) => {
+        setNewNote({
+            title: note.title,
+            content: note.content
+        })
     }
-
+    const handleNotesChange = async (event, note) => {
+        setNewNote({ ...newNote, [event.target.name]: event.target.value })
+        console.log(note._id)
+        const updateTask = await axios.put(`/api/note?_id=${note._id}&&title=${newNote.title}&&content=${newNote.content}`)
+        console.log(updateTask.data)
+        setRefresh(!refresh)
+        toast.success("Note updated")
+    }
 
     return (
         <div className="App">
@@ -55,14 +72,14 @@ const Notes = () => {
                 <h1>Notes</h1>
                 <form onSubmit={handleSubmit}>
                     <input
-                        className='forms'
+                        className='noteText'
                         type="text"
                         placeholder="Title"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
                     />
                     <textarea
-                        className='forms'
+                        className='noteText newContent'
                         placeholder="Content"
                         value={content}
                         onChange={(event) => setContent(event.target.value)}
@@ -72,15 +89,15 @@ const Notes = () => {
             </div>
             <div className='notesDiv'>
                 {notes && notes.map((note, index) => (
-                    <div key={index} className="Note">
-                        <div className='noteContent'>
-                            <h2 className='noteHeader'>{note.title}</h2>
-                            <textarea className='noteText forms' value={note.content} readOnly={true}></textarea>
-                        </div>
-                        <div>
-                            <FaPen className='edit' onClick={() => handleEdit(note)}/>
-                            <FaRegTimesCircle className='delete' onClick={() => handleDelete(note)} />
-                        </div>
+                    <div key={index}
+                        className="Note">
+                        <form style={{textAlign: 'start'}} className='noteContent' onClick={() => handleNoteSelected(note)} onSubmit={(event) => handleNotesChange(event, note)}>
+                            <div style={{display: 'flex', flexDirection: 'row-reverse', width: '100%'}}>
+                                <FaRegTimesCircle className='delete' onClick={() => handleDelete(note)} />
+                                <h2 className='noteHeader editable header'>{note.title}</h2>
+                            </div>
+                            <p className='noteText editable'>{note.content}</p>
+                        </form>
                     </div>
                 ))}
             </div>

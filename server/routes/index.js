@@ -70,22 +70,22 @@ router
         }
     })
 
-    //Forgot password route
+//Forgot password route
 router.put('/user/forgotPassword', async (req, res, next) => {
     const { email, newPassword, securityAnswer } = req.query
-    if(!(newPassword || securityAnswer)) {
-        return res.status(400).send({ Error: "Please fill out all fields"})
+    if (!(newPassword || securityAnswer)) {
+        return res.status(400).send({ Error: "Please fill out all fields" })
     }
     const userConfirm = await User.findOne({ email: email })
     let encryptedPassword = await bcrypt.hash(newPassword, 10)
-    if(userConfirm && (userConfirm.securityAnswer.toLowerCase() === securityAnswer.toLowerCase())){
+    if (userConfirm && (userConfirm.securityAnswer.toLowerCase() === securityAnswer.toLowerCase())) {
         const user = await User.findByIdAndUpdate(userConfirm._id, {
             password: encryptedPassword
         })
         user.save()
         res.status(200).send(user)
     } else {
-        res.status(401).send({ Error: "Incorrect Security Answer"})
+        res.status(401).send({ Error: "Incorrect Security Answer" })
     }
 })
 
@@ -120,7 +120,7 @@ router
             console.log(error)
             res.status(404).json({ error: "No author" })
         }
-    }) 
+    })
     .put(auth, async (req, res, next) => {
         const { title, start, end, category, _id, location, description } = req.body
         const updateTask = await Task.findByIdAndUpdate(_id, {
@@ -146,7 +146,7 @@ router
         } catch (error) {
             console.log(error)
         }
-    }) 
+    })
 
 // Register endpoints
 router.post('/register', async (req, res, next) => {
@@ -236,6 +236,22 @@ router
             console.log(error)
             res.status(404).json({ error: "No author" })
         }
+    })
+    .put(auth, async (req, res, next) => {
+        const { _id, title, content } = req.query
+        console.log(_id)
+        console.log(title)
+        console.log(content)
+        try {
+            const updateNote = Note.findByIdAndUpdate(_id, {
+                title: title,
+                content: content
+            })
+            res.status(200).send(updateNote)
+        } catch (error) {
+            res.status(400).send(error)
+        }
+
     })
     .delete(auth, async (req, res, next) => {
         const { noteid, _id } = req.query

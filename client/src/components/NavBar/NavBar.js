@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
+import Notes from '../Notes/Notes'
 import './navbar.css'
 
 
@@ -18,10 +19,6 @@ const NavBar = () => {
     <div className="navbar">
       {user ?
         <div>
-          
-          <Link  to="/home">
-            Home
-          </Link>
           <Link to="/musicplayer">
             Music
           </Link>
@@ -45,7 +42,9 @@ const NavBar = () => {
           <button onClick={handleLogout}>Logout</button>
         </div> :
         <div>
-         
+          <Link  to="/home">
+            Home
+          </Link>         
           <Link  to="/login">
             Login
           </Link>

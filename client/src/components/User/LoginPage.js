@@ -33,7 +33,7 @@ const LoginPage = () => {
       toast.success('User logged in')
       localStorage.setItem('Id', JSON.stringify(newUser.data.user._id))
       localStorage.setItem('Token', JSON.stringify(newUser.data.token))
-      navigate('/task')
+      navigate('/home')
     } catch (error) {
       toast.error("Incorrect username or password")
     }

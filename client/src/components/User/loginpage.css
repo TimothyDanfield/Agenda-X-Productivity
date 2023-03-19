@@ -24,6 +24,29 @@ h1 {
   padding: 100px;
 }
 
+.mainlogin {
+  background-image: linear-gradient(135deg, rgba(53, 35, 132, 0.7), rgba(47, 144, 255, 0.7));
+  border-radius: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 50px;
+  margin: 50px auto;
+  max-width: 600px;
+  text-align: center;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .signup {
   position: relative;
   width: 100%;

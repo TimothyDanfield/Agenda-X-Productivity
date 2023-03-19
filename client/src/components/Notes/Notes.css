@@ -1,22 +1,9 @@
 .App {
     margin: 0 auto;
-    font-family: Arial, sans-serif;
     background: linear-gradient(to top, #0f0c29, #302b63, #24243e);
     min-height: 100vh;
     height: fit-content;
     padding-top: 5%;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 0;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
 }
 
 input,
@@ -26,11 +13,6 @@ textarea {
     margin-bottom: 10px;
     border: none;
     border-radius: 5px;
-}
-
-input:focus,
-textarea:focus {
-    outline: none;
 }
 
 button[type='submit'] {
@@ -43,33 +25,80 @@ button[type='submit'] {
     cursor: pointer;
 }
 
-.forms {
-    background-color: #F2E6FF; 
-}
-
 .Note {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    height: fit-content;
-    width: 43%;
-    margin: 5px;
-    height: 25vh;
-    background-color: white;
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:10em;
+    width:10em;
+    padding:1em;
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    transform: rotate(-6deg);
+    transition: transform .15s linear;
+    margin-bottom: 5%;
 }
 
+.Note:nth-child(even) {
+    transform:rotate(4deg);
+    position:relative;
+    top:5px;
+    background:#cfc;
+}
+
+.Note:nth-child(3n) {
+    transform: rotate(-3deg);
+    position: relative;
+    top: -5px;
+    background: #ccf;
+}
+
+.Note:nth-child(5n) {
+    transform: rotate(5deg);
+    position: relative;
+    top: -10px;
+}
+
+.Note:hover, .Note:focus {
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, .7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+}
+ 
 .notesDiv {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
-    min-width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10%;
 }
 
 .edit {
     margin-right: 20px;
+    cursor: pointer;
+}
+
+
+
+.noteText {
+    font-family: 'Reenie Beanie';
+    font-size: 2rem;
+    max-width: 90%;
+    background-color: transparent;
+}
+
+.noteHeader {
+    font-weight: bold;
+    font-size: 2rem;
+    max-height: 10%;
+    margin: 0;
+}
+
+.delete {
+    color: red;
     cursor: pointer;
 }
 
@@ -79,38 +108,19 @@ button[type='submit'] {
     width: 43%;
     margin: 0 auto;
     border-radius: 5px;
+    margin-bottom: 10;
 }
 
-.noteText {
-    height: 15vh;
-    width: 100%;
+.editable:focus {
+    outline: none;
 }
 
-.noteHeader {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.noteContent {
-    display: flex;
-    height: fit-content;
+.editable {
+    background-color: transparent;
     width: 90%;
-    flex-direction: column;
-    flex-wrap: wrap;
 }
 
-.delete {
-    color: red;
-    cursor: pointer;
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 16px;
-    margin-bottom: 0;
+.newContent:focus {
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(107, 72, 255, 0.4);
 }
