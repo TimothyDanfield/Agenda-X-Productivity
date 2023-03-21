@@ -16,12 +16,12 @@ const Notes = () => {
         content: ''
     })
 
-    const _id = JSON.parse(localStorage.getItem('Id'))
+    const users = JSON.parse(localStorage.getItem('User'))
 
     useEffect(() => {
         const getUser = async () => {
             try {
-                const userObj = await axios.get(`/api/user?_id=${_id}`)
+                const userObj = await axios.get(`/api/user?_id=${users._id}`)
                 setUser(userObj.data)
                 setNotes(userObj.data.notes)
             } catch (error) {
@@ -36,7 +36,7 @@ const Notes = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${_id}`)
+        const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${users._id}`)
         setRefresh(!refresh)
         setTitle('')
         setContent('')
@@ -46,7 +46,7 @@ const Notes = () => {
     const handleDelete = async (note) => {
         const email = user.email
         const noteid = note._id
-        const deletedNote = await axios.delete(`/api/note?_id=${_id}&&noteid=${noteid}`)
+        const deletedNote = await axios.delete(`/api/note?_id=${users._id}&&noteid=${noteid}`)
         setRefresh(!refresh)
         toast.success('Note deleted')
     }

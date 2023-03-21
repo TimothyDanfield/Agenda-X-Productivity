@@ -13,12 +13,14 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Notes from "./components/Notes/Notes";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import Testing from './components/Testing/testing'
 const App = () => {
 
   return (
     <div>
       <NavBar />
       <Routes>
+        <Route exact path='/test' element={<Testing />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/login" element={<LoginPage />} />

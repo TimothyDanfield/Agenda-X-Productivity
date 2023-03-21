@@ -5,6 +5,7 @@ const keys = require('../config/keys')
 const User = require('../models/User')
 const Task = require('../models/Task')
 const Note = require('../models/Notes')
+const GoogleUser = require('../models/GoogleUser')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -20,7 +21,7 @@ router
     .get(auth, async (req, res, next) => {
         const { _id, email } = req.query
         if (_id) {
-            const user = await User.findById(_id).populate('tasks').populate('notes')
+            const user = await User.findById(_id).populate('tasks').populate('notes') || await GoogleUser.findById(_id).populate('tasks').populate('notes')
             return res.status(200).send(user)
         } else {
             const user = await User.findOne({ email: email })
@@ -94,14 +95,15 @@ router.put('/user/forgotPassword', async (req, res, next) => {
 router
     .route('/task')
     .get(auth, async (req, res, next) => {
-        const { email } = req.query
-        const user = await User.findOne({ email: email })
+        const { _id } = req.query
+
+        const user = await User.findOne({ _id }) || await GoogleUser.findById(_id)
         const task = await Task.find({ author: user._id })
         res.status(200).send(task)
     })
     .post(auth, async (req, res, next) => {
         const { title, start, end, category, _id, location, description } = req.body
-        const author = await User.findById(_id)
+        const author = await User.findById(_id) || await GoogleUser.findById(_id)
         const newTask = new Task({
             title,
             author: author._id,
@@ -130,15 +132,25 @@ router
             category: category,
             location: location,
             description: description
+        }) || await GoogleUser.findByIdAndUpdate(_id, {
+            title: title,
+            start: start,
+            end: end,
+            category: category,
+            location: location,
+            description: description
         })
         res.status(200).send(updateTask)
     })
     .delete(auth, async (req, res, next) => {
         const { _id, taskid } = req.query
-        const author = await User.findById({ _id })
+        const author = await User.findById({ _id }) || await GoogleUser.findById({ _id })
         const deletedTask = await Task.findOneAndDelete({ _id: taskid })
         try {
             const userUpdate = await User.findByIdAndUpdate(
+                { _id: author._id },
+                { $pull: { tasks: taskid } }
+            ) || await GoogleUser.findByIdAndUpdate(
                 { _id: author._id },
                 { $pull: { tasks: taskid } }
             )
@@ -182,6 +194,43 @@ router.post('/register', async (req, res, next) => {
 
 })
 
+router.post('/google', async (req, res, next) => {
+    const { name, email } = req.body
+    try {
+        const oldUser = await GoogleUser.findOne({ email })
+        if (oldUser) {
+            const user = await GoogleUser.findOne({ email }).populate('tasks').populate('notes')
+            if (user) {
+                const token = jwt.sign(
+                    { user_id: user._id, email },
+                    keys.jwt.secret,
+                    {
+                        expiresIn: '12h'
+                    }
+                )
+                user.token = token
+                return res.status(200).json({ user: user, token: user.token })
+            }
+        } else {
+            const user = new GoogleUser({ name, email })
+            const token = jwt.sign(
+                { user_id: user._id, email: email },
+                keys.jwt.secret,
+                {
+                    expiresIn: "12h"
+                }
+            )
+            user.token = token
+            user.save()
+            res.status(201).json({ user: user, token: user.token })
+        }
+
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 // Login endpoints
 router.post('/login', async (req, res, next) => {
     try {
@@ -214,14 +263,13 @@ router
     .route('/note')
     .get(auth, async (req, res, next) => {
         const { _id } = req.body
-        const user = await User.findById({ _id })
+        const user = await User.findById({ _id }) || await GoogleUser.findById({ _id })
         const note = await Note.find({ author: user._id })
-        console.log(note)
         res.status(200).send(note)
     })
     .post(auth, async (req, res, next) => {
         const { title, content, _id } = req.query
-        const author = await User.findById({ _id })
+        const author = await User.findById({ _id }) || await GoogleUser.findById({ _id })
         const newNote = new Note({
             title,
             author: author._id,
@@ -239,9 +287,6 @@ router
     })
     .put(auth, async (req, res, next) => {
         const { _id, title, content } = req.query
-        console.log(_id)
-        console.log(title)
-        console.log(content)
         try {
             const updateNote = Note.findByIdAndUpdate(_id, {
                 title: title,
@@ -256,14 +301,25 @@ router
     .delete(auth, async (req, res, next) => {
         const { noteid, _id } = req.query
         const author = await User.findById({ _id })
+        const googleAuthor = await GoogleUser.findById({ _id })
         const deletedNote = await Note.findOneAndDelete({ _id: noteid })
         try {
-            const userUpdate = await User.findByIdAndUpdate(
-                { _id: author._id },
-                { $pull: { notes: noteid } }
-            )
-            res.status(200).send(author)
-        } catch (error) {
+            if (author) {
+                const userUpdate = await User.findByIdAndUpdate(
+                    { _id: author._id },
+                    { $pull: { notes: noteid } }
+                )
+                res.status(200).send(author)
+            }
+            if (googleAuthor) {
+                const userUpdate = await GoogleUser.findByIdAndUpdate(
+                    { _id: googleAuthor._id },
+                    { $pull: { notes: noteid } }
+                )
+                res.status(200).send(googleAuthor)
+            }
+        }
+        catch (error) {
             console.log(error)
             res.status(404).send('Error')
         }

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from '../../utils/axiosConfig'
+import { toast, Toaster } from 'react-hot-toast'
+import Popup from 'reactjs-popup';
+import GoogleLogin from '../GoogleLogin/GoogleLogin'
+import 'reactjs-popup/dist/index.css'
 import './home.css';
 
 function Home() {
@@ -7,6 +12,10 @@ function Home() {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [showFeatures, setShowFeatures] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [providedEmail, setProvidedEmail] = useState('')
+  const [user, setUser] = useState()
 
   const navigate = useNavigate()
 
@@ -17,12 +26,48 @@ function Home() {
     setTimeout(() => setShowFeatures(true), 2000);
   }, []);
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // Google Login Functionality:
+
+  
+// Normal login functionality
+  const loginUser = async (e) => {
+    e.preventDefault()
+    if (!email || !password) return;
+
+    try {
+      const newUser = await axios.post(`/api/login?email=${email}&&password=${password}`)
+      setUser(newUser)
+      localStorage.setItem('User', JSON.stringify(newUser.data.user))
+      localStorage.setItem('Token', JSON.stringify(newUser.data.token))
+      navigate('/profile')
+    } catch (error) {
+      toast.error("Incorrect username or password")
+    }
+  };
+
+  const provideEmail = (e) => {
+    setProvidedEmail(e.target.value)
+  }
+
+  const handleForgotPassword = () => {
+    localStorage.setItem('ForgotPassword', JSON.stringify(providedEmail))
+    navigate('/forgotpassword')
+  }
+
   return (
     <div className="home-page-container">
       <div className="hero-section">
-        {showTitle && <h1 className="title">Todo List</h1>}
+        {showTitle && <h1 className="homeTitle">Todo List</h1>}
         {showSubtitle && <p className="subtitle">Organize your tasks and achieve your goals with ease</p>}
-        {showButton && <button className="get-started-button" onClick={() => navigate('/login')}>Get Started</button>}
+        {showButton && <button className="get-started-button" onClick={() => navigate('/signup')}>Get Started</button>}
       </div>
 
       <div className="features-section">
@@ -43,10 +88,32 @@ function Home() {
         </div>
       </div>
 
-      <div className="cta-section">
-        <h2>Ready to get started?</h2>
-        <button className="cta-button" onClick={() => navigate('/signup')}>Create an Account</button>
-        <p style={{color: 'black'}}>Already have an account? <Link to="/login" style={{textDecoration: 'none'}}>Sign in</Link></p>
+      <div className="login-form-container">
+        <h2>Login</h2>
+        <form>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" value={email} onChange={handleEmailChange} />
+
+          <label htmlFor="password">Password:</label>
+          <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
+          
+          <button id="myButton" onClick={loginUser}>
+            Login
+          </button>
+          
+        </form>
+        <div style={{margin: '20px' }}>Or</div>
+        <GoogleLogin />
+        <p style={{color: 'black'}}>Don't have an account yet? <Link to="/signup" style={{textDecoration: 'none'}}>Sign up</Link></p>
+        <Popup
+              trigger={<h5 className='forgotPwd'>Forgot Password?</h5>}
+              position="bottom center"
+              className='forgotPassword'>
+              <form onSubmit={handleForgotPassword} className="passwordForm">
+                <input placeholder="Please provide an email" onChange={provideEmail}></input>
+                <button>Submit</button>
+              </form>
+            </Popup>
       </div>
     </div>
   );

@@ -31,12 +31,16 @@ const ProfilePage = () => {
     endTime: ''
   })
 
-  const _id = JSON.parse(localStorage.getItem('Id'))
+  const users = JSON.parse(localStorage.getItem('User'))
+
+  useEffect(() => {
+    setRefresh(!refresh)
+  }, [])
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const userObj = await axios.get(`/api/user?_id=${_id}`)
+        const userObj = await axios.get(`/api/user?_id=${users._id}`)
         setUser(userObj.data)
       } catch (error) {
         console.log(error)
@@ -63,7 +67,7 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateUser = await axios.put(`/api/user?name=${name}&&email=${email}&&currentPassword=${currentPassword}&&newPassword=${newPassword}&&_id=${_id}`)
+    const updateUser = await axios.put(`/api/user?name=${name}&&email=${email}&&currentPassword=${currentPassword}&&newPassword=${newPassword}&&_id=${users._id}`)
     toast.success('Successfully updated information')
     setRefresh(!refresh)
     setName('')
@@ -90,7 +94,7 @@ const ProfilePage = () => {
 
   const handleDelete = async (task) => {
     const taskid = task._id
-    const deletedTask = await axios.delete(`/api/task?_id=${_id}&&taskid=${taskid}`)
+    const deletedTask = await axios.delete(`/api/task?_id=${users._id}&&taskid=${taskid}`)
     setRefresh(!refresh)
     toast.success('Note deleted')
   }
@@ -166,7 +170,7 @@ const ProfilePage = () => {
         </DialogActions>
       </Dialog>
         <h1>Tasks</h1>
-        {user && user.tasks.map((task, index) => {
+        {user.tasks && user.tasks.map((task, index) => {
           let startDate = new Date(task.start).toString()
           let endDate = new Date(task.end).toString()
           let convertedStartDate = moment(startDate).format("MM-DD-YYYY")
@@ -184,8 +188,8 @@ const ProfilePage = () => {
           )
         })}
       </div>
-      
-      <div className="profile-settings">
+      {user.userType === 'User' ?
+       <div className="profile-settings">
         <h1>Profile Settings</h1>
         <form>
           <div className="form-group">
@@ -210,7 +214,10 @@ const ProfilePage = () => {
 
           <button className="btn-primary" type="submit" onClick={handleSubmit}>Save Changes</button>
         </form>
-      </div>
+      </div> 
+      :
+      ''}
+     
       <Toaster />
     </div>
   )

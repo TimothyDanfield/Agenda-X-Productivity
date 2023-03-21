@@ -14,6 +14,30 @@ const LoginPage = () => {
   const [providedEmail, setProvidedEmail] = useState('')
   const [user, setUser] = useState()
   const navigate = useNavigate()
+
+  const gapi = window.gapi
+  const CLIENT_ID = ''
+  const API_KEY = ''
+  const DISCOVERY_DOCS = ''
+  const SCOPES = ''
+
+  const handleClick = () => {
+    gapi.load('client:auth2', () => {
+      console.log('loaded client')
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      })
+
+      gapi.client.load('calendar', 'v3', () => console.log('works'))
+
+      gapi.auth2.getAuthInstance().signin()
+    })
+  }
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -70,7 +94,9 @@ const LoginPage = () => {
           <Button className="button" type="primary" onClick={loginUser}>
             Login
           </Button>
+          
         </form>
+          <button>Test</button>
         <div style={{width: '50%', margin: '0 auto'}}>
           <div className="links">
             <Popup

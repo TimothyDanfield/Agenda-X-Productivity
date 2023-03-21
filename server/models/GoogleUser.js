@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema.Types
 
-const userSchema = new mongoose.Schema({
+const googleUserSchema = new mongoose.Schema({
     userType: {
         type: String,
-        default: "User"
+        default: "googleUser"
     },
     name: {
         type: String,
@@ -13,18 +13,6 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    securityQuestion: {
-        type: String,
-        required: true,
-    },
-    securityAnswer: {
-        type: String,
         required: true,
     },
     tasks: [
@@ -41,6 +29,6 @@ const userSchema = new mongoose.Schema({
     ]
 })
 
-const User = mongoose.model('User', userSchema)
+const GoogleUser = mongoose.model('GoogleUser', googleUserSchema)
 
-module.exports = User
+module.exports = GoogleUser

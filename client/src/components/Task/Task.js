@@ -51,7 +51,7 @@ const Task = () => {
 
   const { RangePicker } = DatePicker
 
-  const _id = JSON.parse(localStorage.getItem('Id'))
+  const users = JSON.parse(localStorage.getItem('User'))
 
   useEffect(() => {
     setRefresh(!refresh)
@@ -59,7 +59,7 @@ const Task = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const userObj = await axios.get(`/api/user?_id=${_id}`)
+      const userObj = await axios.get(`/api/user?_id=${users._id}`)
       setUser(userObj.data)
       setTasksOnCalendar(userObj.data.tasks)
     }
@@ -107,7 +107,7 @@ const Task = () => {
       category: newEvent.category,
       location: newEvent.location,
       description: newEvent.description,
-      _id
+      _id: users._id
     })
     handleClose()
     setRefresh(!refresh)
@@ -170,7 +170,7 @@ const Task = () => {
   }
 
   const handleDelete = async () => {
-    const deletedTask = await axios.delete(`/api/task?_id=${_id}&&taskid=${selectedEvent._id}`)
+    const deletedTask = await axios.delete(`/api/task?_id=${users._id}&&taskid=${selectedEvent._id}`)
     handleClose()
     setRefresh(!refresh)
     toast.success('Note deleted')
