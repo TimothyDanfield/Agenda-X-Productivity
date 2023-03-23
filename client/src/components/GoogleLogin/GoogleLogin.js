@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from 'react';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import GoogleButton from 'react-google-button';
-import { toast, Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

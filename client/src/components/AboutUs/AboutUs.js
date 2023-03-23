@@ -1,7 +1,5 @@
 import React from 'react';
 import './aboutus.css';
-//import person1Picture from './images/person1.jpg';
-//import person2Picture from './images/person2.jpg';
 
 function AboutUs() {
   return (
@@ -12,7 +10,7 @@ function AboutUs() {
       <h2>Meet the team behind the app:</h2>
       <div className="team-section">
         <div className="person">
-          <img src='{person1Picture}' alt="Person 1"/>
+          <img src='nathan.jpg' alt="Person 1"/>
           <h3>Nathaniel Grandinette</h3>
           <p>Nathaniel is a full-stack developer with a passion for creating elegant and efficient solutions to complex problems. He has experience working with a HTML, CSS, JavaScript, and React, and is always eager to learn new things.</p>
         </div>

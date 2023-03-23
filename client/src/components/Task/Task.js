@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { DatePicker, Button, Input, Select, Space, TimePicker } from "antd";
-import { Calendar, dateFnsLocalizer, momentLocalizer } from 'react-big-calendar'
+import { DatePicker, Button, Input, Space } from "antd";
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
@@ -191,7 +191,7 @@ const Task = () => {
           startAccessor="start"
           endAccessor="end"
           timeslots={4}
-          style={{ height: 550, margin: '50px' }}
+          style={{ height: 750, padding: 50, width: '90%', margin: '0 auto' }}
           eventPropGetter={eventPropGetter}
           resizable={true}
           selectable={true}

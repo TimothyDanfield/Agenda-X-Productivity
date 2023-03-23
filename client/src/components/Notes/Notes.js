@@ -31,9 +31,6 @@ const Notes = () => {
         getUser()
     }, [refresh])
 
-
-
-
     const handleSubmit = async (event) => {
         event.preventDefault()
         const newNote = await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${users._id}`)

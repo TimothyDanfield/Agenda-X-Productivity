@@ -20,8 +20,8 @@ const ForgotPassword = () => {
             } catch (error) {
                 console.log(error)
             }
-            
-        } 
+
+        }
         getUser()
     }, [])
 
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         const updateUser = await axios.put(`/api/user/forgotPassword?email=${email}&&newPassword=${newPassword}&&securityAnswer=${securityAnswer}`)
         localStorage.clear()
         navigate('/login')
-      };
+    };
 
     const handleSecurityAnswer = (e) => {
         setSecurityAnswer(e.target.value)
@@ -40,18 +40,16 @@ const ForgotPassword = () => {
         setNewPassword(e.target.value)
     }
 
-  return (
-    <div>
-        <div>
+    return (
+        <div style={{ paddingTop: '25%' }}>
             <form onSubmit={handleSubmitForm}>
                 <h5>{user.securityQuestion}</h5>
                 <input className='securityAnswer' placeholder='Your answer' value={securityAnswer} onChange={handleSecurityAnswer}></input>
                 <input placeholder='New password' value={newPassword} onChange={handlePasswordChange}></input>
-                <button>Submit</button>
+                <button className='forgotPwdButton'>Submit</button>
             </form>
         </div>
-    </div>
-  )
+    )
 }
 
 export default ForgotPassword

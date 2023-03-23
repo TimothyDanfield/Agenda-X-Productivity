@@ -2,7 +2,6 @@ import React from "react";
 import { Link, } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import { googleLogout } from "@react-oauth/google";
-import Notes from '../Notes/Notes'
 import './navbar.css'
 
 
@@ -17,11 +16,11 @@ const NavBar = () => {
     localStorage.clear()
     navigate('/')
   }
-  console.log(user)
+
   return (
-    <div className="navbar">
+    <div className="navbar1">
       {user ?
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div className="navbar2">
           <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}</span>
           <div>
             <Link to="/musicplayer">
@@ -43,19 +42,15 @@ const NavBar = () => {
               Profile
             </Link>
           </div>
-          <div>
+          <div style={{maxHeight: '5px'}}>
             <button onClick={handleLogout} className='logout-button'>Logout</button>
           </div>
         </div> :
-        <div>
+        <div className="navbar2">
+          <span style={{ color: 'white' }}>{`Welcome`}</span>
+          <div>
           <Link to="/home">
             Home
-          </Link>
-          <Link to="/login">
-            Login
-          </Link>
-          <Link to="/signup">
-            Sign Up
           </Link>
           <Link to="/aboutus">
             About Us
@@ -63,6 +58,8 @@ const NavBar = () => {
           <Link to="/contact">
             Contact Us
           </Link>
+          </div>
+          <div></div>
         </div>}
     </div>
   );

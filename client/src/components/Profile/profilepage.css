@@ -1,6 +1,6 @@
 .profileBody {
     height: 90vh;
-    margin-top: 2%;
+    margin-top: none;
     padding: 0;
     font-family: sans-serif;
     background: url("/public/livewires-logo.png") no-repeat center/cover;

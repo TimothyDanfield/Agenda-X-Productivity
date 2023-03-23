@@ -10,6 +10,7 @@
 
 .hero-section {
   text-align: center;
+  margin-top: 5%;
   opacity: 0;
   transform: translateY(50px);
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
@@ -17,7 +18,7 @@
 
 .homeTitle {
   font-size: 5rem;
-  color: #3498db !important;
+  color: #ffeba7 !important;
   margin-bottom: 20px;
   opacity: 0;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
@@ -33,8 +34,8 @@
 
 .get-started-button {
   font-size: 1.5rem;
-  background-color: #3498db;
-  color: #fff;
+  background-color: #ffeba7;
+  color: black;
   padding: 10px 20px;
   border: none;
   border-radius: 30px;
@@ -46,9 +47,9 @@
 }
 
 .get-started-button:hover {
-  background-color: #4CAF50;
-  transform: scale(1.1) !important;
-  box-shadow: 3px 3px 5px black;
+  background-color: #000000;
+  color: #ffeba7;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
 }
 
 .features-section {
@@ -60,27 +61,6 @@
   opacity: 0;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s forwards;
 }
-
-#myButton {
-  position: relative;
-  display: inline-block;
-  padding: 12px 30px;
-  border: none;
-  background-color: #3498db; 
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-#myButton:hover {
-  background-color: #4CAF50;
-  transform: scale(1.1);
-  box-shadow: 3px 3px 5px black;
-}
-
 
 .login-form-container {
   display: flex;
@@ -116,34 +96,6 @@
 .feature p {
   font-size: 1rem;
   color: black;
-}
-
-.cta-section {
-  text-align: center;
-  margin-top: 100px;
-  opacity: 0;
-  animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3s forwards;
-}
-
-.cta-section h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.cta-button {
-  background-color: #3498db;
-  border: none;
-  color: #fff;
-  font-size: 1.5rem;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.cta-button:hover {
-  background-color: #2980b9;
-  cursor: pointer;
 }
 
 @keyframes fade-in {
@@ -195,7 +147,3 @@
   cursor: pointer;
 }
 
-.forgotPwd:hover {
-  transform: scale(1.2);
-  color: rgb(252, 54, 54);
-}
