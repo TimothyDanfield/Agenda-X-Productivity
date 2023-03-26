@@ -1,64 +1,104 @@
-import React from "react";
-import Howler from "howler";
+import React, { useState, useEffect, useRef } from "react";
 
-class MusicPlayer extends React.Component {
-  constructor(props) {
-    super(props);
+const MusicPlayer = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [currentSong, setCurrentSong] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef();
+  const [accessToken, setAccessToken] = useState("");
 
-    this.state = {
-      playing: false,
-      song: null,
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      const response = await fetch(
+        "https://accounts.spotify.com/api/token",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${btoa(
+              "81185dbb8f8d40aa9cf655885c2c002b:88d1447cbd1f452ba24135e3cfa62570"
+            )}`,
+          },
+          body: "grant_type=client_credentials",
+        }
+      );
+      const data = await response.json();
+      setAccessToken(data.access_token);
     };
 
-    this.play = this.play.bind(this);
-    this.stop = this.stop.bind(this);
-  }
+    fetchAccessToken();
+  }, []);
 
-  componentDidMount() {
-    const song = new Howler({
-      src: [this.props.song], 
-      loop: true, 
-      volume: 0.5, 
-    });
+  const handleSearch = () => {
+    fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSearchResults(data.tracks.items);
+      })
+      .catch((error) => console.log(error));
+  };
 
-    this.setState({ song }); 
-  }
+  const handlePlay = () => {
+    setIsPlaying(true);
+    audioRef.current.play();
+  };
 
-  play() {
-   
-    const { playing, song } = this.state;
+  const handlePause = () => {
+    setIsPlaying(false);
+    audioRef.current.pause();
+  };
 
-    if (!playing) {
-      
-      song.play(); 
+  const handleStop = () => {
+    setIsPlaying(false);
+    setCurrentSong("");
+    audioRef.current.pause();
+  };
 
-      this.setState({ playing: true }); 
-    } else {
-      
-      song.pause(); 
+  const handleSongClick = (song) => {
+    setCurrentSong(song);
+    setIsPlaying(true);
+    audioRef.current.src = song.preview_url;
+    audioRef.current.play();
+  };
 
-      this.setState({ playing: false }); 
-    }
-  }
+  return (
+    <div>
+      <h1>Music Player</h1>
+      <input
+        type="text"
+        placeholder="Search for a song"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+      <br />
+      <br />
+      {searchResults.map((song) => (
+        <div key={song.id}>
+          <img src={song.album.images[0].url} alt={song.name} />
+          <h2>{song.name}</h2>
+          <p>{song.artists[0].name}</p>
+          <button onClick={() => handleSongClick(song)}>Play</button>
+        </div>
+      ))}
+      <br />
+      {currentSong && (
+        <div>
+          <h2>Currently playing: {currentSong.name}</h2>
+          <button onClick={isPlaying ? handlePause : handlePlay}>
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          <button onClick={handleStop}>Stop</button>
+        </div>
+      )}
+      <audio ref={audioRef} />
+    </div>
+  );
+};
 
-  stop() {
-    
-    const { song } = this.state;
-
-    if (song) {
-      song.stop();
-
-      this.setState({ playing: false });
-    }
-  }
-
-  render() {
-    return (
-      <div className="music-player">
-        <button onClick={this.play}>Play/Pause</button>
-        <button onClick={this.stop}>Stop</button>
-      </div>
-    );
-  }
-}
 export default MusicPlayer;
