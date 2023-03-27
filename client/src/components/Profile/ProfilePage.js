@@ -50,7 +50,7 @@ const ProfilePage = () => {
   }, [refresh])
 
   const handleUpdateEvent = async () => {
-    const updateTask = await axios.put('/api/task', {
+    await axios.put('/api/task', {
       title: newEvent.title ? newEvent.title : selectedEvent.title,
       start: newEvent.start ? newEvent.start : selectedEvent.start,
       end: newEvent.end ? newEvent.end : selectedEvent.end,
@@ -67,7 +67,7 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateUser = await axios.put(`/api/user?name=${name}&&email=${email}&&currentPassword=${currentPassword}&&newPassword=${newPassword}&&_id=${users._id}`)
+    await axios.put(`/api/user?name=${name}&&email=${email}&&currentPassword=${currentPassword}&&newPassword=${newPassword}&&_id=${users._id}`)
     toast.success('Successfully updated information')
     setRefresh(!refresh)
     setName('')
@@ -94,13 +94,34 @@ const ProfilePage = () => {
 
   const handleDelete = async (task) => {
     const taskid = task._id
-    const deletedTask = await axios.delete(`/api/task?_id=${users._id}&&taskid=${taskid}`)
+    await axios.delete(`/api/task?_id=${users._id}&&taskid=${taskid}`)
     setRefresh(!refresh)
     toast.success('Note deleted')
   }
 
   const handleClose = () => {
     setOpenEvent(false)
+  }
+
+  const getBackgroundColor = (event) => {
+    let backgroundColor
+    if (event.category === 'Personal') {
+      backgroundColor = '#b1d199' //green
+    }
+    if (event.category === 'Work') {
+      backgroundColor = '#aa9aff' //purple
+    }
+    if (event.category === 'School') {
+      backgroundColor = '#f8aa4d' //orange
+    } 
+    if (event.category === 'Appointment') {
+      backgroundColor = '#ff7561' //red 
+    } 
+    if (event.category === 'Other') {
+      backgroundColor = '#63b4ff' //blue
+    }
+    
+    return backgroundColor
   }
 
   return (
@@ -177,7 +198,7 @@ const ProfilePage = () => {
           let convertedEndDate = moment(endDate).format("MM-DD-YYYY")
           return (
             <div key={index} >
-              <div className='profileTask' onClick={() => handleEventSelected(task)}>
+              <div className='profileTask' style={{boxShadow: `5px 5px 5px ${getBackgroundColor(task)}`}} onClick={() => handleEventSelected(task)}>
                 <div>
                   <h5 style={{ margin: '0' }}>Task: {task.title}</h5>
                   <p className='pTasks'>Task Category: {task.category}</p>

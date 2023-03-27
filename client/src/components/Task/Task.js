@@ -100,7 +100,7 @@ const Task = () => {
   })
 
   const handleAddEvent = async () => {
-    const task = await axios.post('/api/task', {
+    await axios.post('/api/task', {
       title: newEvent.title,
       start: newEvent.start,
       end: newEvent.end,
@@ -115,7 +115,7 @@ const Task = () => {
   }
 
   const handleUpdateEvent = async () => {
-    const updateTask = await axios.put('/api/task', {
+    await axios.put('/api/task', {
       title: newEvent.title ? newEvent.title : selectedEvent.title,
       start: newEvent.start ? newEvent.start : selectedEvent.start,
       end: newEvent.end ? newEvent.end : selectedEvent.end,
@@ -130,8 +130,7 @@ const Task = () => {
   }
 
   const handleChangeEvent = async ({ event, start, end }) => {
-    const updatedEvent = { ...event, start: start, end: end, _id: event._id }
-    const changeEvent = await axios.put('/api/task', {
+    await axios.put('/api/task', {
       title: event.title,
       start: start,
       end: end,
@@ -170,7 +169,7 @@ const Task = () => {
   }
 
   const handleDelete = async () => {
-    const deletedTask = await axios.delete(`/api/task?_id=${users._id}&&taskid=${selectedEvent._id}`)
+    await axios.delete(`/api/task?_id=${users._id}&&taskid=${selectedEvent._id}`)
     handleClose()
     setRefresh(!refresh)
     toast.success('Note deleted')

@@ -3,6 +3,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import GoogleButton from 'react-google-button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './GoogleLogin.css'
 
 const instance = axios.create({
     baseURL: 'http://localhost:3001'
@@ -52,7 +53,7 @@ function GoogleLogin() {
 
     return (
         <div>
-            <GoogleButton onClick={() => login()} />
+            <GoogleButton onClick={() => login()} className='google' style={{backgroundColor: '#1f2029'}}/>
         </div>
     );
 }

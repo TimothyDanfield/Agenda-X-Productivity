@@ -58,13 +58,13 @@ const ContactUs = () => {
         </div>
         <form className="form" onSubmit={sendEmail}>
           <div className="form-group">
-            <input type="text" className='contactText' id="name" name="name" placeholder="Your name" required />
+            <input type="text" className='contactText contact-input' id="name" name="name" placeholder="Your name" required />
           </div>
           <div className="form-group">
-            <input type="email" className='contactEmail' id="email" name="email" placeholder="Your email" required />
+            <input type="email" className='contactEmail contact-input' id="email" name="email" placeholder="Your email" required />
           </div>
           <div className="form-group">
-            <textarea id="message" name="message" placeholder="Your message" required />
+            <textarea id="message" name="message" className='contact-input contact-message' placeholder="Your message" required />
           </div>
           <div className="form-group">
             <input type="submit" value="Submit" className="submit-btn" />

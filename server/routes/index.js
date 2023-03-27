@@ -18,7 +18,7 @@ router.get('/', auth, (req, res, next) => {
 // User endpoints
 router
     .route('/user')
-    .get(auth, async (req, res, next) => {
+    .get(async (req, res, next) => {
         const { _id, email } = req.query
         if (_id) {
             const user = await User.findById(_id).populate('tasks').populate('notes') || await GoogleUser.findById(_id).populate('tasks').populate('notes')
@@ -288,7 +288,7 @@ router
     .put(auth, async (req, res, next) => {
         const { _id, title, content } = req.query
         try {
-            const updateNote = Note.findByIdAndUpdate(_id, {
+            const updateNote = await Note.findByIdAndUpdate(_id, {
                 title: title,
                 content: content
             })

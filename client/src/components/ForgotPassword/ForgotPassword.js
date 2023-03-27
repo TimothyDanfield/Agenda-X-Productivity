@@ -24,10 +24,10 @@ const ForgotPassword = () => {
         }
         getUser()
     }, [])
-
+    console.log(user)
     const handleSubmitForm = async (e) => {
         e.preventDefault();
-        const updateUser = await axios.put(`/api/user/forgotPassword?email=${email}&&newPassword=${newPassword}&&securityAnswer=${securityAnswer}`)
+        await axios.put(`/api/user/forgotPassword?email=${email}&&newPassword=${newPassword}&&securityAnswer=${securityAnswer}`)
         localStorage.clear()
         navigate('/login')
     };
@@ -43,7 +43,7 @@ const ForgotPassword = () => {
     return (
         <div style={{ paddingTop: '25%' }}>
             <form onSubmit={handleSubmitForm}>
-                <h5>{user.securityQuestion}</h5>
+                <h5>{user && user.securityQuestion}</h5>
                 <input className='securityAnswer' placeholder='Your answer' value={securityAnswer} onChange={handleSecurityAnswer}></input>
                 <input placeholder='New password' value={newPassword} onChange={handlePasswordChange}></input>
                 <button className='forgotPwdButton'>Submit</button>

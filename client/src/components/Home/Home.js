@@ -23,8 +23,6 @@ function Home() {
     window.scrollTo({ 
       top: document.documentElement.scrollHeight, 
       behavior: 'smooth'
-      /* you can also use 'auto' behaviour 
-         in place of 'smooth' */
     }); 
   }; 
 

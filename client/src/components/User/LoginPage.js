@@ -107,7 +107,7 @@ const LoginPage = () => {
                           <input type="password" className="form-style" placeholder="Password" onChange={handlePasswordChange} />
                         </div>
                         <button onClick={loginUser} className="btn mt-4">Login</button>
-                        <div className="mb-0 mt-4 text-center or">Or</div>
+                        <div className="mb-0 mt-4 text-center or" style={{color: '#ffeba7'}}>Or</div>
                         <div className="mb-0 mt-4 text-center google">
                           <GoogleLogin />
                         </div>

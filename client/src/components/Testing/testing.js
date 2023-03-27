@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 
 
 const Testing = () => {
-
     const [events, setEvents] = useState([])
 
     const gapi = window.gapi
@@ -14,13 +13,13 @@ const Testing = () => {
     // const SCOPES = 'https://www.googleapis.com/auth/calendar.events'
     function authenticate() {
         return gapi.auth2.getAuthInstance()
-            .signIn({scope: 'https://www.googleapis.com/auth/calendar.events'})
+            .signIn({scope: process.env.REACT_APP_CALENDAR_SCOPES})
             .then(function() { console.log("Sign-in successful"); },
                   function(err) { console.error("Error signing in", err); });
       }
       function loadClient() {
-        gapi.client.setApiKey('AIzaSyA1K7VqJWBklsYJnUJxC2mKSkHqeOBpDiY');
-        return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest")
+        gapi.client.setApiKey(process.env.REACT_APP_CALENDAR_API);
+        return gapi.client.load(process.env.REACT_APP_CALENDAR_DISCOVERS_DOCS)
             .then(function() { console.log("GAPI client loaded for API"); },
                   function(err) { console.error("Error loading GAPI client for API", err); });
       }
@@ -37,7 +36,7 @@ const Testing = () => {
                   function(err) { console.error("Execute error", err); });
       }
       gapi.load("client:auth2", function() {
-        gapi.auth2.init({clientId: "391972270506-tkc1n8d8setttid80mf8c78fmag5gcei.apps.googleusercontent.com",
+        gapi.auth2.init({clientId: process.env.REACT_APP_CALENDAR_CLIENT_ID,
         plugin_name: "chat"});
       });
     return (
