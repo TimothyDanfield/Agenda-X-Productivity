@@ -1,6 +1,7 @@
 import React from "react";
 import emailjs from 'emailjs-com'
 import { ToastContainer, toast } from 'react-toastify'
+import { EMAIL_KEY } from "../../configs/constants";
 import 'react-toastify/dist/ReactToastify.css'
 import './contactus.css'
 const ContactUs = () => {
@@ -8,7 +9,7 @@ const ContactUs = () => {
   const sendEmail = (e) => {
     e.preventDefault()
 
-    emailjs.sendForm('service_s0a4xlw', 'template_0reyskf', e.target, 'pjlYxQ6jLWiRuqeFA')
+    emailjs.sendForm('service_s0a4xlw', 'template_0reyskf', e.target, EMAIL_KEY)
       .then((result) => {
         console.log(result.text)
         toast('Email sent', {
@@ -29,7 +30,6 @@ const ContactUs = () => {
   }
 
   return (
-
     <div className='contactBody'>
       <ToastContainer
         position="top-right"
@@ -43,8 +43,6 @@ const ContactUs = () => {
         pauseOnHover
         theme="dark"
       />
-
-
       <div className="contact-container">
         <div className="headerContainer">
           <h1 className="title">Contact <span className='contact-header-name'>Us</span></h1>

@@ -59,7 +59,7 @@ const Task = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const userObj = await axios.get(`/api/user?_id=${users._id}`)
+      const userObj = await axios.get(`/user?_id=${users._id}`)
       setUser(userObj.data)
       setTasksOnCalendar(userObj.data.tasks)
     }
@@ -100,7 +100,7 @@ const Task = () => {
   })
 
   const handleAddEvent = async () => {
-    await axios.post('/api/task', {
+    await axios.post('/task', {
       title: newEvent.title,
       start: newEvent.start,
       end: newEvent.end,
@@ -115,7 +115,7 @@ const Task = () => {
   }
 
   const handleUpdateEvent = async () => {
-    await axios.put('/api/task', {
+    await axios.put('/task', {
       title: newEvent.title ? newEvent.title : selectedEvent.title,
       start: newEvent.start ? newEvent.start : selectedEvent.start,
       end: newEvent.end ? newEvent.end : selectedEvent.end,
@@ -130,7 +130,7 @@ const Task = () => {
   }
 
   const handleChangeEvent = async ({ event, start, end }) => {
-    await axios.put('/api/task', {
+    await axios.put('/task', {
       title: event.title,
       start: start,
       end: end,
@@ -169,7 +169,7 @@ const Task = () => {
   }
 
   const handleDelete = async () => {
-    await axios.delete(`/api/task?_id=${users._id}&&taskid=${selectedEvent._id}`)
+    await axios.delete(`/task?_id=${users._id}&&taskid=${selectedEvent._id}`)
     handleClose()
     setRefresh(!refresh)
     toast.success('Note deleted')
@@ -189,7 +189,7 @@ const Task = () => {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          timeslots={4}
+          timeslots={2}
           style={{ height: 750, padding: 50, width: '90%', margin: '0 auto' }}
           eventPropGetter={eventPropGetter}
           resizable={true}
@@ -197,7 +197,7 @@ const Task = () => {
           onSelectEvent={(event) => handleEventSelected(event)}
           onSelectSlot={(slotInfo) => handleSlotSelected(slotInfo)}
           step={15}
-
+          className="DnD-calendar"
           onEventResize={({ event, start, end }) => handleChangeEvent({ event, start, end })}
           onEventDrop={({ event, start, end }) => handleChangeEvent({ event, start, end })}
         />
@@ -240,7 +240,7 @@ const Task = () => {
               showTime={{
                 format: 'hh:mm A',
               }}
-              style={{ marginBottom: '10px' }}
+              style={{ marginBottom: '10px', }}
               placeholder={[newEvent.start, newEvent.end]}
               format="YYYY-MM-DD hh:mm A"
               onOk={(value) => setNewEvent({ ...newEvent, start: value[0].format(), end: value[1].format() })}

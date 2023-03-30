@@ -2,11 +2,12 @@ import React, { useState, useEffect} from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import GoogleButton from 'react-google-button';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../configs/constants';
 import axios from 'axios';
 import './GoogleLogin.css'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: API_URL
 })
 
 
@@ -39,7 +40,7 @@ function GoogleLogin() {
 
     const loginUser = async (profile) => {
         try {
-            const newUser = await instance.post(`/api/google`, {
+            const newUser = await instance.post(`/google`, {
                 name: profile.name,
                 email: profile.email
             });

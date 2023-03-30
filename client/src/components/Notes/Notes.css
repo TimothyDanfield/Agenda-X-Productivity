@@ -1,6 +1,6 @@
 .App {
     margin: 0 auto;
-    background: linear-gradient(to top, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(to bottom right, #bdc3c7, #2c3e50) !important;
     min-height: 100vh;
     height: fit-content;
     padding-top: 5%;
@@ -17,33 +17,38 @@ textarea {
 
 button[type='submit'] {
     padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #ffeba7;
+    color: black !important;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
+button[type='submit']:hover {
+    background-color: #000000;
+    color: #ffeba7 !important;
+}
+
 .Note {
-    text-decoration:none;
-    color:#000;
-    background:#ffc;
-    display:block;
-    height:15em;
-    width:15em;
-    padding:1em;
-    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    text-decoration: none;
+    color: #000;
+    background: #ffc;
+    display: block;
+    height: 15em;
+    width: 15em;
+    padding: 1em;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, .7);
     transform: rotate(-6deg);
     transition: transform .15s linear;
     margin-bottom: 5%;
 }
 
 .Note:nth-child(even) {
-    transform:rotate(4deg);
-    position:relative;
-    top:5px;
-    background:#cfc;
+    transform: rotate(4deg);
+    position: relative;
+    top: 5px;
+    background: #cfc;
 }
 
 .Note:nth-child(3n) {
@@ -59,13 +64,14 @@ button[type='submit'] {
     top: -10px;
 }
 
-.Note:hover, .Note:focus {
+.Note:hover,
+.Note:focus {
     box-shadow: 10px 10px 7px rgba(0, 0, 0, .7);
     transform: scale(1.25);
     position: relative;
     z-index: 5;
 }
- 
+
 .notesDiv {
     display: flex;
     justify-content: space-around;
@@ -81,8 +87,6 @@ button[type='submit'] {
     cursor: pointer;
 }
 
-
-
 .noteText {
     font-family: 'Reenie Beanie';
     font-size: 2rem;
@@ -97,13 +101,19 @@ button[type='submit'] {
     margin: 0;
 }
 
+.notes-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .delete {
     color: red;
     cursor: pointer;
 }
 
 .notesHeader {
-    background-color: white;
+    background-color: #1f2029;
     padding: 20px;
     width: 43%;
     margin: 0 auto;
@@ -118,6 +128,10 @@ button[type='submit'] {
 .editable {
     background-color: transparent;
     width: 90%;
+}
+
+.newContent::placeholder {
+    color: #ffeba7 !important;
 }
 
 .newContent:focus {

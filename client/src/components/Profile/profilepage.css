@@ -1,11 +1,11 @@
 .profileBody {
-    height: 90vh;
+    min-height: 100vh;
     margin-top: none;
     padding: 0;
     font-family: sans-serif;
-    background: url("/public/livewires-logo.png") no-repeat center/cover;
+    background: linear-gradient(to bottom right, #bdc3c7, #2c3e50);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
     flex-wrap: wrap;
 }
@@ -14,11 +14,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 60%;
-    width: 40%;
-    margin: 1%;
-    max-width: 600px;
-    background-color: transparent;
+    min-height: 57rem;
+    min-width: 60%;
+    margin-top: 5%;
+    background-color: #2b2e38;
     padding: 40px;
     border-radius: 10px;
     color: #333333;
@@ -31,14 +30,20 @@ h1 {
     text-align: center;
 }
 
-form {
+.profile-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    min-width: 100%;
 }
 
-.form-group {
+.profile-form-group {
+    position: relative;
+    background-color: #2b2e38;
+    display: block;
+    margin: 0;
+    padding: 20px;
+    border-radius: 25px;
     width: 100%;
     margin-bottom: 20px;
 }
@@ -46,18 +51,27 @@ form {
 label {
     font-size: 24px;
     font-weight: bold;
+    color: white;
     margin-bottom: 10px;
 }
 
 .profileInput {
-    font-size: 20px;
-    padding: 15px;
-    width: 95%;
+    padding: 13px 20px;
+    padding-left: 55px;
+    height: 48px;
+    width: 100%;
+    font-weight: 500;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: #c4c3ca;
+    background-color: #1f2029;
     border: none;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-    background-color: transparent;
-    color: #333333;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+    box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
 }
 
 input:focus {
@@ -84,29 +98,34 @@ input:focus {
 }
 
 .taskContainer {
-    width: 40%;
-    margin: 1%;
+    min-width: 30%;
+    margin-top: 5%;
     max-width: 600px;
-    background-color: transparent;
+    background-color: #2b2e38;
     padding: 40px;
     border-radius: 10px;
     color: #333333;
-    height: 60%;
+    height: 57rem;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .profileTask {
-    border: 1px solid black;
-    margin-bottom: 20px;
+    margin-bottom: 10%;
+    padding: 13px 20px;
+    padding-left: 35px;
     height: fit-content;
-    border-radius: 5px;
-    font-size: 20px;
-    padding: 15px;
-    width: 95%;
+    width: 100%;
+    font-weight: 500;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: white;
+    background-color: #1f2029;
     border: none;
-    
-    color: #333333;
+    box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -115,6 +134,7 @@ input:focus {
 
 .pTasks {
     font-size: 15px;
+    color: white;
 }
 
 .profileTask:hover {

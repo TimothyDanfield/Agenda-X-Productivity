@@ -17,7 +17,6 @@ mongoose.connection.on('connected', () => {
 })
 
 const app = express()
-const PORT = 3001
 
 app.use(cors())
 app.use(express.json())
@@ -26,19 +25,19 @@ app.use(express.urlencoded({ extended: false }))
 // api router
 app.use(keys.app.apiEndpoint, router)
 
-app.get('/', (req, res) => {
-    res.status(200).json({ message: 'It works'})
-})
-
-/*app.use((req, res, next) => {
-    next(createError(404, 'NotFound'))
-})*/
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../client/build")))
+    
+    app.all("*", (req, res, next) => {
+      res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+    })
+  }
  
-app.listen(PORT, function(error){
+app.listen(process.env.PORT, function(error){
     if(error) {
         console.log("Error in server setup")
     }
-    console.log("Server listening on port", PORT)
+    console.log("Server listening on port", process.env.PORT)
 })
 
 module.exports = app

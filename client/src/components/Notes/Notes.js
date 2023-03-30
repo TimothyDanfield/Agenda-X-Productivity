@@ -17,7 +17,7 @@ const Notes = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [openNote, setOpenNote] = useState(false)
-    const [selectedEvent, setSelectedEvent] = useState()
+    const [selectedNote, setselectedNote] = useState()
     const [newNote, setNewNote] = useState({
         title: '',
         content: ''
@@ -28,7 +28,7 @@ const Notes = () => {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const userObj = await axios.get(`/api/user?_id=${users._id}`)
+                const userObj = await axios.get(`/user?_id=${users._id}`)
                 setUser(userObj.data)
                 setNotes(userObj.data.notes)
             } catch (error) {
@@ -40,7 +40,7 @@ const Notes = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        await axios.post(`/api/note?title=${title}&&content=${content}&&_id=${users._id}`)
+        await axios.post(`/note?title=${title}&&content=${content}&&_id=${users._id}`)
         setRefresh(!refresh)
         setTitle('')
         setContent('')
@@ -49,13 +49,14 @@ const Notes = () => {
 
     const handleDelete = async (note) => {
         const noteid = note._id
-        await axios.delete(`/api/note?_id=${users._id}&&noteid=${noteid}`)
+        await axios.delete(`/note?_id=${users._id}&&noteid=${noteid}`)
         setRefresh(!refresh)
         toast.success('Note deleted')
+        handleClose()
     }
 
     const handleNoteSelected = (note) => {
-        setSelectedEvent(note)
+        setselectedNote(note)
         setNewNote({
             title: note.title,
             content: note.content
@@ -64,76 +65,79 @@ const Notes = () => {
     }
 
     const handleNotesChange = async () => {
-        await axios.put(`/api/note?_id=${selectedEvent._id}&&title=${newNote.title}&&content=${newNote.content}`)
+        await axios.put(`/note?_id=${selectedNote._id}&&title=${newNote.title}&&content=${newNote.content}`)
         handleClose()
         setRefresh(!refresh)
         toast.success("Note updated")
     }
-    
-      const handleClose = () => {
+
+    const handleClose = () => {
         setOpenNote(false)
-      }
+    }
 
     return (
         <div className="App">
             <Dialog
-        onClose={handleClose}
-        open={openNote}
-      >
-        <DialogTitle>Note Details</DialogTitle>
-        <DialogContent className='dialogContent'>
-          <Input
-            style={{ width: "200px", height: '30px', marginBottom: '10px' }}
-            value={newNote.title}
-            onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-            placeholder="Enter Task Name"
-          />
-          <br/>
-          <Input.TextArea
-            style={{ width: "500px", height: '90px', marginBottom: '10px' }}
-            value={newNote.content}
-            onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-            placeholder="Content"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button type="primary" onClick={handleDelete} style={{ marginLeft: '10px', backgroundColor: 'red' }}>
-            Delete
-          </Button>
-          <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
-            Cancel
-          </Button>
-          <Button type="primary" onClick={(selectedEvent) => handleNotesChange(selectedEvent)} style={{ marginLeft: '10px' }}>
-            Update Note
-          </Button>
-        </DialogActions>
-      </Dialog>
-            <div className='notesHeader'>
-                <h1>Notes</h1>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        className='noteText'
-                        type="text"
-                        placeholder="Title"
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
+                onClose={handleClose}
+                open={openNote}
+            >
+                <DialogTitle>Note Details</DialogTitle>
+                <DialogContent className='dialogContent'>
+                    <Input
+                        style={{ width: "200px", height: '30px', marginBottom: '10px' }}
+                        value={newNote.title}
+                        onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
+                        placeholder="Enter Task Name"
                     />
-                    <textarea
-                        className='noteText newContent'
+                    <br />
+                    <Input.TextArea
+                        style={{ width: "500px", height: '90px', marginBottom: '10px' }}
+                        value={newNote.content}
+                        onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
                         placeholder="Content"
-                        value={content}
-                        onChange={(event) => setContent(event.target.value)}
-                    ></textarea>
-                    <button type="submit">Add Note</button>
-                </form>
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button type="primary" onClick={() => handleDelete(selectedNote)} style={{ marginLeft: '10px', backgroundColor: 'red' }}>
+                        Delete
+                    </Button>
+                    <Button type="primary" onClick={handleClose} style={{ marginLeft: '10px' }}>
+                        Cancel
+                    </Button>
+                    <Button type="primary" onClick={(selectedNote) => handleNotesChange(selectedNote)} style={{ marginLeft: '10px' }}>
+                        Update Note
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <div className='notesHeader'>
+                <h1 style={{color: '#e74c3c'}}>Notes</h1>
+                <div className='add-notes'>
+                    <form onSubmit={handleSubmit} className='notes-form'>
+                        <input
+                            className='noteText newContent'
+                            type="text"
+                            placeholder="Title"
+                            style={{color: 'white'}}
+                            value={title}
+                            onChange={(event) => setTitle(event.target.value)}
+                        />
+                        <textarea
+                            className='noteText newContent'
+                            placeholder="Content"
+                            value={content}
+                            style={{color: 'white'}}
+                            onChange={(event) => setContent(event.target.value)}
+                        ></textarea>
+                        <button type="submit">Add Note</button>
+                    </form>
+                </div>
             </div>
             <div className='notesDiv'>
                 {notes && notes.map((note, index) => (
                     <div key={index}
                         className="Note">
-                        <form style={{textAlign: 'start'}} className='noteContent' onClick={() => handleNoteSelected(note)}>
-                            <div style={{display: 'flex', flexDirection: 'row-reverse', width: '100%'}}>
-                                <FaRegTimesCircle className='delete' onClick={() => handleDelete(note)} />
+                        <form style={{ textAlign: 'start' }} className='noteContent' onClick={() => handleNoteSelected(note)}>
+                            <div style={{ display: 'flex', flexDirection: 'row-reverse', width: '100%' }}>
                                 <h2 className='noteHeader editable header'>{note.title}</h2>
                             </div>
                             <p className='noteText editable'>{note.content}</p>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link, } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import { googleLogout } from "@react-oauth/google";
+import MusicPlayer from '../MusicPlayer/MusicPlayer'
 import './navbar.css'
 
 
@@ -22,6 +23,7 @@ const NavBar = () => {
       {user ?
         <div className="navbar2">
           <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}</span>
+          <MusicPlayer />
           <div>
             <Link to="/musicplayer">
               Music

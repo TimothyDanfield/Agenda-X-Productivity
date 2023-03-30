@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_URL } from '../configs/constants'
 
 const getToken = () => {
     const token = JSON.parse(localStorage.getItem('Token'))
@@ -6,7 +7,7 @@ const getToken = () => {
 }
 
 const instance = axios.create({
-    baseURL: `http://localhost:3001`,
+    baseURL: API_URL,
     timeout: 5000,
     headers: {
         'x-access-token': getToken(),

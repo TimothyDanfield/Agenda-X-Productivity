@@ -8,13 +8,59 @@
 .calendar {
     width: 100%;
     margin: 0 auto;
-    background-color: white;
+    padding-top: 10%;
+    background: linear-gradient(to bottom right, #bdc3c7, #2c3e50);
     color: black;
     height: 95vh;
 }
 
+.DnD-calendar {
+    background-color: #1f2029;
+    color: #ffeba7;
+}
+
 .rbc-month-view {
     cursor: pointer;
+}
+
+.ant-picker-cell {
+    background-color: white;
+}
+
+.ant-picker-panel-layout button {
+    color: black !important;
+}
+
+th {
+    background-color: white;
+}
+
+.rbc-month-header {
+    font-size: 1.25rem !important;
+}
+
+.rbc-today {
+    background: linear-gradient(to bottom right, #bdc3c7, #2c3e50) !important;
+}
+
+.rbc-off-range .rbc-button-link {
+    color: black !important;
+}
+
+button {
+    color: #ffeba7 !important;
+}
+
+tr {
+    background-color: black !important;
+}
+
+th {
+    font-size: 1.25rem !important;
+}
+
+.rbc-active {
+    background: linear-gradient(to bottom right, #bdc3c7, #2c3e50) !important;
 }
 
 .ant-picker-dropdown {

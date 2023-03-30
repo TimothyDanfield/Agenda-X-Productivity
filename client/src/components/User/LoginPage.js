@@ -31,7 +31,7 @@ const LoginPage = () => {
     if (!email || !password) return;
 
     try {
-      const newUser = await axios.post(`/api/login?email=${email}&&password=${password}`)
+      const newUser = await axios.post(`/login?email=${email}&&password=${password}`)
       setUser(newUser)
       localStorage.setItem('User', JSON.stringify(newUser.data.user))
       localStorage.setItem('Token', JSON.stringify(newUser.data.token))
@@ -67,7 +67,7 @@ const LoginPage = () => {
       if (!password || !name || !email || !securityQuestion || !securityAnswer) {
         toast.error("Please fill out required information");
       } else {
-        const newUser = await axios.post(`/api/register`, {
+        const newUser = await axios.post(`/register`, {
           name: name,
           email: email,
           password: password,
@@ -106,7 +106,7 @@ const LoginPage = () => {
                         <div className="form-group mt-2">
                           <input type="password" className="form-style" placeholder="Password" onChange={handlePasswordChange} />
                         </div>
-                        <button onClick={loginUser} className="btn mt-4">Login</button>
+                        <button onClick={loginUser} className="btn mt-4 log-in-page-button">Login</button>
                         <div className="mb-0 mt-4 text-center or" style={{color: '#ffeba7'}}>Or</div>
                         <div className="mb-0 mt-4 text-center google">
                           <GoogleLogin />
@@ -156,7 +156,7 @@ const LoginPage = () => {
                           <input onChange={handlePasswordChange} type="password" className="form-style" placeholder="Password" />
                           <i className="input-icon uil uil-lock-alt"></i>
                         </div>
-                        <button onClick={signUp} className="btn mt-4">Register</button>
+                        <button onClick={signUp} className="btn mt-4 log-in-page-button">Register</button>
                       </div>
                     </div>
                   </div>

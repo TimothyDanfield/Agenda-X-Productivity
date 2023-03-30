@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const user = await axios.get(`/api/user?email=${email}`)
+                const user = await axios.get(`/user?email=${email}`)
                 setUser(user.data)
             } catch (error) {
                 console.log(error)
@@ -24,10 +24,10 @@ const ForgotPassword = () => {
         }
         getUser()
     }, [])
-    console.log(user)
+    
     const handleSubmitForm = async (e) => {
         e.preventDefault();
-        await axios.put(`/api/user/forgotPassword?email=${email}&&newPassword=${newPassword}&&securityAnswer=${securityAnswer}`)
+        await axios.put(`/user/forgotPassword?email=${email}&&newPassword=${newPassword}&&securityAnswer=${securityAnswer}`)
         localStorage.clear()
         navigate('/login')
     };

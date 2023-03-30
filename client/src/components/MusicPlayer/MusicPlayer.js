@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import './musicplayer.css'
 
 const MusicPlayer = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,35 +69,36 @@ const MusicPlayer = () => {
 
   return (
     <div>
-      <h1>Music Player</h1>
-      <input
-        type="text"
-        placeholder="Search for a song"
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-      <br />
-      <br />
-      {searchResults.map((song) => (
-        <div key={song.id}>
-          <img src={song.album.images[0].url} alt={song.name} />
-          <h2>{song.name}</h2>
-          <p>{song.artists[0].name}</p>
-          <button onClick={() => handleSongClick(song)}>Play</button>
-        </div>
-      ))}
-      <br />
-      {currentSong && (
-        <div>
-          <h2>Currently playing: {currentSong.name}</h2>
-          <button onClick={isPlaying ? handlePause : handlePlay}>
-            {isPlaying ? "Pause" : "Play"}
-          </button>
-          <button onClick={handleStop}>Stop</button>
-        </div>
-      )}
-      <audio ref={audioRef} />
+      <div className='music-player'>
+        <input
+          type="text"
+          placeholder="Search for a song"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+        <button className='music-button' onClick={handleSearch}>Search</button>
+        <br />
+        <br />
+        {searchResults.map((song) => (
+          <div key={song.id}>
+            <img className='song-img' src={song.album.images[0].url} alt={song.name} />
+            <h2>{song.name}</h2>
+            <p>{song.artists[0].name}</p>
+            <button className='music-button' onClick={() => handleSongClick(song)}>Play</button>
+          </div>
+        ))}
+        <br />
+        {currentSong && (
+          <div>
+            <h2>Currently playing: {currentSong.name}</h2>
+            <button className='music-button' onClick={isPlaying ? handlePause : handlePlay}>
+              {isPlaying ? "Pause" : "Play"}
+            </button>
+            <button className='music-button' onClick={handleStop}>Stop</button>
+          </div>
+        )}
+        <audio ref={audioRef} />
+      </div>
     </div>
   );
 };
