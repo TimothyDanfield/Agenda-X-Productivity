@@ -68,7 +68,7 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div>
+    <div className="music-player-conatiner">
       <div className='music-player'>
         <input
           type="text"

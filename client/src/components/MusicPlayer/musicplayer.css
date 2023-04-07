@@ -1,13 +1,34 @@
-.music-player {
-    height: 30px !important;
+
+.music-player-container {
+max-width: 800px; 
+  margin: 0 auto; 
+  overflow-x: auto; 
 }
+
+.music-player {
+    display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  padding: 20px;
+}
+
+.music-player > div {
+    flex-basis: calc(25% - 20px); 
+  }
+
+  .music-player img {
+    width: 100%;
+    height: auto;
+  }
 
 .radio {
     max-width: 60em;
     width: 100%;
 }
 
-
+.music-button {
+    margin-top: 10px;
+}
 
 .filters {
     display: flex;
