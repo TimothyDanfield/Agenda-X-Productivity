@@ -88,6 +88,7 @@ const MusicPlayer = () => {
           </div>
         ))}
         <br />
+        
         {currentSong && (
           <div>
             <h2>Currently playing: {currentSong.name}</h2>
