@@ -24,20 +24,20 @@ const NavBar = () => {
         <div className="navbar2">
           <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}</span>
           <MusicPlayer />
-          <div>
-            <Link to="/task">
+          <div className='links'>
+            <Link to="/task" className='link'>
               Work
             </Link>
-            <Link to="/notes">
+            <Link to="/notes" className='link'>
               Notes
             </Link>
-            <Link to="/aboutus">
+            <Link to="/aboutus" className='link'>
               About Us
             </Link>
-            <Link to="/contact">
+            <Link to="/contact" className='link'>
               Contact Us
             </Link>
-            <Link to="/profile">
+            <Link to="/profile" className='link'>
               Profile
             </Link>
           </div>
@@ -45,16 +45,16 @@ const NavBar = () => {
             <button onClick={handleLogout} className='logout-button'>Logout</button>
           </div>
         </div> :
-        <div className="navbar2">
+        <div className="navbar3">
           <span style={{ color: 'white' }}>{`Welcome`}</span>
-          <div>
-          <Link to="/home">
+          <div className='links'>
+          <Link to="/home" className='link'>
             Home
           </Link>
-          <Link to="/aboutus">
+          <Link to="/aboutus" className='link'>
             About Us
           </Link>
-          <Link to="/contact">
+          <Link to="/contact" className='link'>
             Contact Us
           </Link>
           </div>

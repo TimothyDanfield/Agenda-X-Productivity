@@ -22,27 +22,35 @@
     width: fit-content;
     position: relative;
     display: inline-block;
-    color: red;
-    position: relative;
 }
 
 .music-dropdown-content {
-    display: none;
+    overflow: scroll;
     position: absolute;
+    max-height: 50vh;
     min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
-    background-color: rgba(255, 255, 255, 0.24);
     color: black;
     padding: 8px 16px;
     text-decoration: none;
 }
 
 .music-dropdown-item .mucis-dropdown-content {
-    color: black;
-    color: black;
     padding: 5px 2px;
     text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.playing {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+}
+
+.music-dropdown-content .music-dropdown-item:hover {
+    color: red;
+}
+
+.music-dropdown:hover .nav-dropdown-content {
     display: block;
 }
 
@@ -61,7 +69,7 @@
 }
 
 .music-button {
-    margin-top: 10px;
+    height: 25px;
 }
 
 .filters {
@@ -113,8 +121,8 @@
 
 .song-img {
     display: block;
-    width: 2.5em;
-    height: 2.5em;
+    width: 2em;
+    height: 2em;
     border-radius: 50%;
     border: 2px solid rgb(76, 62, 95);
     margin: 0 0.25em;

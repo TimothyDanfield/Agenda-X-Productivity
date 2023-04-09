@@ -38,12 +38,12 @@ a:hover {
   text-decoration: none;
 }
 
-.link {
+.forgotPwd {
   color: #ffeba7;
   font-size: small;
 }
 
-.link:hover {
+.forgotPwd:hover {
   color: #c4c3ca;
 }
 

@@ -113,7 +113,7 @@ const LoginPage = () => {
                         </div>
                         <p className="mb-0 mt-4 text-center">
                           <Popup
-                            trigger={<span className='forgotPwd link'>Forgot Password?</span>}
+                            trigger={<span className='forgotPwd'>Forgot Password?</span>}
                             position="bottom center"
                             className='forgotPassword'>
                             <div className="form-group mt-2">

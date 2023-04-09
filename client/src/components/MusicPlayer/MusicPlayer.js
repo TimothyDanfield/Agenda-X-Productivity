@@ -44,7 +44,8 @@ const MusicPlayer = () => {
       .catch((error) => console.log(error));
   };
 
-  const handlePlay = () => {
+  const handlePlay = (song) => {
+    setCurrentSong(song);
     setIsPlaying(true);
     audioRef.current.play();
   };
@@ -65,22 +66,23 @@ const MusicPlayer = () => {
     setIsPlaying(true);
     audioRef.current.src = song.preview_url;
     audioRef.current.play();
+    setSearchResults('')
+    setSearchTerm('')
   };
 
   return (
     <div className="music-player-conatiner">
       <div className='music-player music-dropdown'>
         <input
+          className='profileInput'
           type="text"
           placeholder="Search for a song"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
-        <button className='music-button' onClick={handleSearch}>Search</button>
-        <br />
-        <br />
-        <div className='music-content'>
-          {searchResults.map((song) => (
+        <button className='logout-button' onClick={handleSearch}>Search</button>
+        <div className='music-dropdown-content'>
+          {searchResults && searchResults.map((song) => (
           <div key={song.id} className='music-drowdown-item'>
             <img className='song-img' src={song.album.images[0].url} alt={song.name} />
             <h2>{song.name}</h2>
@@ -92,15 +94,15 @@ const MusicPlayer = () => {
         
         <br />
         
-        {currentSong && (
+        {currentSong ?
           <div>
-            <h2>Currently playing: {currentSong.name}</h2>
+            <h2 className='playing'>Currently playing: {currentSong.name}</h2>
             <button className='music-button' onClick={isPlaying ? handlePause : handlePlay}>
               {isPlaying ? "Pause" : "Play"}
             </button>
             <button className='music-button' onClick={handleStop}>Stop</button>
-          </div>
-        )}
+          </div> : ''
+        } 
         <audio ref={audioRef} />
       </div>
     </div>
