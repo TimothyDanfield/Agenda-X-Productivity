@@ -25,9 +25,6 @@ const NavBar = () => {
           <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}</span>
           <MusicPlayer />
           <div>
-            <Link to="/musicplayer">
-              Music
-            </Link>
             <Link to="/task">
               Work
             </Link>

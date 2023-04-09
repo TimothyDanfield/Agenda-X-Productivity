@@ -69,7 +69,7 @@ const MusicPlayer = () => {
 
   return (
     <div className="music-player-conatiner">
-      <div className='music-player'>
+      <div className='music-player music-dropdown'>
         <input
           type="text"
           placeholder="Search for a song"
@@ -79,14 +79,17 @@ const MusicPlayer = () => {
         <button className='music-button' onClick={handleSearch}>Search</button>
         <br />
         <br />
-        {searchResults.map((song) => (
-          <div key={song.id}>
+        <div className='music-content'>
+          {searchResults.map((song) => (
+          <div key={song.id} className='music-drowdown-item'>
             <img className='song-img' src={song.album.images[0].url} alt={song.name} />
             <h2>{song.name}</h2>
             <p>{song.artists[0].name}</p>
             <button className='music-button' onClick={() => handleSongClick(song)}>Play</button>
           </div>
         ))}
+        </div>
+        
         <br />
         
         {currentSong && (

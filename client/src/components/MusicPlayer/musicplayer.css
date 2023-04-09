@@ -1,25 +1,59 @@
-
 .music-player-container {
-max-width: 800px; 
-  margin: 0 auto; 
-  overflow-x: auto; 
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: scroll;
+    height: 40px;
 }
 
 .music-player {
     display: flex;
-  flex-wrap: wrap;
-  gap: 20px; 
-  padding: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.music-player > div {
-    flex-basis: calc(25% - 20px); 
-  }
+.songsList {
+    overflow: scroll;
+    max-height: 150px;
+}
 
-  .music-player img {
+.music-dropdown {
+    height: 100%;
+    width: fit-content;
+    position: relative;
+    display: inline-block;
+    color: red;
+    position: relative;
+}
+
+.music-dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.24);
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.music-dropdown-item .mucis-dropdown-content {
+    color: black;
+    color: black;
+    padding: 5px 2px;
+    text-decoration: none;
+    display: block;
+}
+
+.music-player>div {
+    flex-basis: calc(25% - 20px);
+}
+
+.music-player img {
     width: 100%;
     height: auto;
-  }
+}
 
 .radio {
     max-width: 60em;

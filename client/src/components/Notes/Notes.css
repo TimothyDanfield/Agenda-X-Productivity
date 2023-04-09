@@ -118,7 +118,6 @@ button[type='submit']:hover {
     width: 43%;
     margin: 0 auto;
     border-radius: 5px;
-    margin-bottom: 10;
 }
 
 .editable:focus {
