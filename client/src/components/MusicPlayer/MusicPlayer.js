@@ -68,7 +68,7 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div>
+    <div className="music-player-conatiner">
       <div className='music-player'>
         <input
           type="text"
@@ -88,6 +88,7 @@ const MusicPlayer = () => {
           </div>
         ))}
         <br />
+        
         {currentSong && (
           <div>
             <h2>Currently playing: {currentSong.name}</h2>
