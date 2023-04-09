@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === "production") {
     })
 }
 
-app.listen(process.env.PORT, function (error) {
+app.listen(process.env.PORT || 3001, function (error) {
     if (error) {
         console.log("Error in server setup")
     }
