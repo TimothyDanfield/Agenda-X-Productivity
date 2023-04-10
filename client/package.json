@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "hamburger-react": "^2.5.0",
     "react-scripts": "^5.0.1"
   }
 }

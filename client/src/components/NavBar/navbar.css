@@ -1,17 +1,18 @@
 .navbar1 {
     background-color: black;
+    padding: 25px;
     margin: 0 auto;
     text-align: center;
     font-family: Brush Script MT, cursive;
     font-size: large;
     text-decoration: none;
-    height: 10vh;
+    min-height: 10vh;
 
 }
 
 .navbar2 {
     display: flex !important;
-    justify-content: space-around !important;
+    justify-content: space-between !important;
     align-items: center;
     height: 100% !important;
 }
@@ -42,6 +43,8 @@
 
 .links {
     display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     height: 100%;
 }
 
