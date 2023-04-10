@@ -22,8 +22,10 @@ const NavBar = () => {
     <div className="navbar1">
       {user ?
         <div className="navbar2">
-          <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}</span>
+          <span style={{ color: 'white' }}>{`Welcome, ${user.name}`}
           <MusicPlayer />
+          </span>
+          
           <div className='links'>
             <Link to="/task" className='link'>
               Work
