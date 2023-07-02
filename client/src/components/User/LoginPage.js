@@ -41,6 +41,23 @@ const LoginPage = () => {
     }
   };
 
+  const loginTestUser = async (e) => {
+    e.preventDefault()
+    const adminEmail = "admin@gmail.com"
+    const adminPassword = "admintest"
+
+    try {
+      const newUser = await axios.post(`/login?email=${adminEmail}&&password=${adminPassword}`)
+      setUser(newUser)
+      localStorage.setItem('User', JSON.stringify(newUser.data.user))
+      localStorage.setItem('Token', JSON.stringify(newUser.data.token))
+      navigate('/profile')
+    } catch (error) {
+      toast.error("Incorrect username or password")
+    }
+  };
+
+
   const handleForgotPassword = () => {
     localStorage.setItem('ForgotPassword', JSON.stringify(email))
     navigate('/forgotpassword')
@@ -107,6 +124,7 @@ const LoginPage = () => {
                           <input type="password" className="form-style" placeholder="Password" onChange={handlePasswordChange} />
                         </div>
                         <button onClick={loginUser} className="btn mt-4 log-in-page-button">Login</button>
+                        <button onClick={loginTestUser} className="btn mt-4 ml-4 log-in-page-button">Test Login</button>
                         <div className="mb-0 mt-4 text-center or" style={{color: '#ffeba7'}}>Or</div>
                         <div className="mb-0 mt-4 text-center google">
                           <GoogleLogin />

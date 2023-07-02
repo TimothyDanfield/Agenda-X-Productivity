@@ -6,8 +6,12 @@
     font-family: Brush Script MT, cursive;
     font-size: large;
     text-decoration: none;
-    min-height: 10vh;
+    height: 7vh;
+}
 
+.hamburger-nav {
+    display: flex;
+    align-items: center;
 }
 
 .navbar2 {
@@ -46,6 +50,7 @@
     justify-content: space-around;
     flex-wrap: wrap;
     height: 100%;
+    width: 100%;
 }
 
 .link {

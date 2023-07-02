@@ -6,7 +6,6 @@ import Task from "./components/Task/Task";
 import Home from "./components/Home/Home";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
-import Radio from "./components/MusicPlayer/MusicPlayer";
 import ProfilePage from "./components/Profile/ProfilePage";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Notes from "./components/Notes/Notes";
@@ -24,7 +23,6 @@ const App = () => {
         <Route exact path="/contact" element={<ContactUs />} />
         <Route element={<PrivateRoutes />}>
           <Route exact path="/task" element={<Task />} />
-          <Route exact path="/musicplayer" element={<Radio />} />
           <Route exact path="/profile" element={<ProfilePage />} />
           <Route exact path="/notes" element={<Notes />} />
         </Route>
